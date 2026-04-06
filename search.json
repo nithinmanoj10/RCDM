@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Mathematical Optimization",
+    "section": "Introduction",
+    "text": "Introduction\n\nWelcome to my Hello World slide!\nThis presentation is built with Quarto and RevealJS.\nHosted on GitHub Pages."
+  },
+  {
+    "objectID": "index.html#sample-equation",
+    "href": "index.html#sample-equation",
+    "title": "Mathematical Optimization",
+    "section": "Sample Equation",
+    "text": "Sample Equation\nOptimization often involves minimizing a function \\(f(x)\\):\n\\[\\min_{x \\in \\mathbb{R}^n} f(x)\\]"
+  }
+]
