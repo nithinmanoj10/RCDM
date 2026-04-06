@@ -1,0 +1,22 @@
+---
+title: "Mathematical Optimization"
+subtitle: "Final Project Presentation"
+author: "Nithin Manoj"
+institute: "IISc Bangalore"
+format: 
+  revealjs:
+    theme: sky
+    transition: slide
+---
+
+## Introduction
+
+- Welcome to my Hello World slide!
+- This presentation is built with **Quarto** and **RevealJS**.
+- Hosted on **GitHub Pages**.
+
+## Sample Equation
+
+Optimization often involves minimizing a function $f(x)$:
+
+$$\min_{x \in \mathbb{R}^n} f(x)$$
