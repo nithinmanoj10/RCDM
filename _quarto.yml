@@ -1,0 +1,12 @@
+project:
+  type: website
+  output-dir: _site
+
+render:
+  - index.qmd # Or whatever your main file is named
+
+format:
+  revealjs:
+    theme: sky
+    transition: slide
+    scrollable: true
