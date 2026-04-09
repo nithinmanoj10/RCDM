@@ -26,5 +26,61 @@
     "title": "Randomized Coordinate Descent Methods",
     "section": "Sparse Quadratic Problem",
     "text": "Sparse Quadratic Problem\n\n\\[f(x) = \\sum_{i=1}^{n} f_i(x^{(i)}) + \\frac{1}{2} \\| Ax-b \\|^2 \\]\n\n\n\\(f_i\\) are convex differentiable univariate functions\nEach column \\(a_i\\)​ of \\(A\\) is sparse, each with \\(p_i\\) number of non-zero elements.\n\n\n\\[x_+ = x + \\alpha a_i \\]\n\n\n\nOnly requires \\(O(p_i)\\) steps to compute\n\n\n\nNesterov’s insight can be thousands of times faster per effective pass."
+  },
+  {
+    "objectID": "index.html#the-problem-we-are-trying-to-solve",
+    "href": "index.html#the-problem-we-are-trying-to-solve",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "The Problem we are Trying to Solve",
+    "text": "The Problem we are Trying to Solve\n\n\\[ \\min_{x \\in \\mathbb{R}^N} f(x) \\]\n\n\n\\(f\\) is convex and differentiable\nOptimal set \\(X^*\\) is nonempty and bounded"
+  },
+  {
+    "objectID": "index.html#mathematical-notation",
+    "href": "index.html#mathematical-notation",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Mathematical Notation",
+    "text": "Mathematical Notation\n\n\\[ \\langle x,y \\rangle = \\sum_{i=1}^n x^{(i)}y^{(i)} \\]\n\n\n\\[ \\| s \\|^*  = \\max_{\\| h\\| = 1} \\langle s,x\\rangle\\]\n\n\n\\[ s^\\# \\in arg\\max_x \\; [\\langle s,x\\rangle - \\frac{1}{2}\\| x\\|^2]\\]"
+  },
+  {
+    "objectID": "index.html#coordinatewise-smoothness",
+    "href": "index.html#coordinatewise-smoothness",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Coordinate‑wise Smoothness",
+    "text": "Coordinate‑wise Smoothness\nWe assume each partial gradient is Lipschitz in its own block\n\n\\[ \\| f_i^\\prime(x + U_ih_i) - f_i^\\prime(x) \\|^*_{(i)} \\le L_i \\| h_i \\|_{(i)} \\]\n\n\n\\(f_i^\\prime(x)\\) is the gradient w.r.t block \\(i\\)\n\\(L_i\\) is the Lipschitz constant for block \\(i\\) (known or estimated)\n\\(\\| \\cdot \\|_{(i)}\\) is a norm we can choose per block"
+  },
+  {
+    "objectID": "index.html#quadratic-upper-bound",
+    "href": "index.html#quadratic-upper-bound",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Quadratic Upper Bound",
+    "text": "Quadratic Upper Bound\nFrom the Lipschitz condition, for any step \\(h_i\\)​ in block \\(i\\)\n\n\\[ f(x+ U_ih_i) \\le f(x) + \\langle f_i^\\prime(x), h_i \\rangle + \\frac{L_i}{2} \\| h_i \\|^2_{(i)} \\]\n\n\nBlock‑wise descent lemma"
+  },
+  {
+    "objectID": "index.html#optimal-coordinate-step",
+    "href": "index.html#optimal-coordinate-step",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Optimal Coordinate Step",
+    "text": "Optimal Coordinate Step\nWe choose \\(h_i\\)​ to minimize the right‑hand side\n\n\\[ h^*_i = -\\frac{1}{L_i} f_i^\\prime(x)^\\#\\]\n\n\nWe can now define the optimal coordinate steps as\n\n\n\\[ T_i(x) = x - \\frac{1}{L_i}U_if_i^\\prime(x)^\\# \\]"
+  },
+  {
+    "objectID": "index.html#guaranteed-decrease",
+    "href": "index.html#guaranteed-decrease",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Guaranteed Decrease",
+    "text": "Guaranteed Decrease\n\n\\[ f(x) - f(T_i(x)) \\ge \\frac{1}{2L_i} (\\| f_i^\\prime(x) \\|^*_{i})^2 \\]\n\n\nSo the decrease is proportional to the squared size of the partial gradient."
+  },
+  {
+    "objectID": "index.html#random-coordinate-selection",
+    "href": "index.html#random-coordinate-selection",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Random Coordinate Selection",
+    "text": "Random Coordinate Selection\nAt each iteration we pick a random block \\(i\\) with probability\n\n\\[ p_{\\alpha}^i = \\frac{L_i^\\alpha}{\\sum_{j=1}^n L_j^\\alpha} \\; ,\\alpha \\in \\mathbb{R} \\]"
+  },
+  {
+    "objectID": "index.html#rcd-algorithm",
+    "href": "index.html#rcd-algorithm",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "RCD Algorithm",
+    "text": "RCD Algorithm\n\n\nInput: starting point \\(x_0\\), parameter \\(\\alpha\\)\n\n\nFor \\(k=0,1,2,\\dots\\) do\n\n\n\nChoose random block \\(\\color{#000000}{i_k}\\) with probability \\(p_\\alpha(i)\\)\n\n\n\n\nUpdate: \\[x_{k+1} = x_k - \\frac{1}{L_{\\color{#000000}{i_k}}} U_{\\color{#000000}{i_k}} (f'_{\\color{#000000}{i_k}}(x_k))^\\#\\]\n\n\n\nEnd"
   }
 ]
