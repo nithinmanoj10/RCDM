@@ -1,16 +1,30 @@
 [
   {
-    "objectID": "index.html#introduction",
-    "href": "index.html#introduction",
-    "title": "Mathematical Optimization",
-    "section": "Introduction",
-    "text": "Introduction\n\nWelcome to my Hello World slide!\nThis presentation is built with Quarto and RevealJS.\nHosted on GitHub Pages."
+    "objectID": "index.html#the-reality-of-modern-data",
+    "href": "index.html#the-reality-of-modern-data",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "The Reality of Modern Data",
+    "text": "The Reality of Modern Data\n\nIn recent years, we can observe an increasing interest to optimization problems of a very big size.\nWe are talking in the scale of millions!\nTraditional methods require evaluating the entire gradient vector to find the exact steepest descent.\n\n\nEvaluating \\(\\nabla f(x)\\) becomes computationally expensive"
   },
   {
-    "objectID": "index.html#sample-equation",
-    "href": "index.html#sample-equation",
-    "title": "Mathematical Optimization",
-    "section": "Sample Equation",
-    "text": "Sample Equation\nOptimization often involves minimizing a function \\(f(x)\\):\n\\[\\min_{x \\in \\mathbb{R}^n} f(x)\\]"
+    "objectID": "index.html#nesterovs-insight",
+    "href": "index.html#nesterovs-insight",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Nesterov’s Insight",
+    "text": "Nesterov’s Insight\n\n\n\n“We must adopt an optimization technique based on the random partial update of decision variables.”"
+  },
+  {
+    "objectID": "index.html#the-main-idea-coordinate-relaxation",
+    "href": "index.html#the-main-idea-coordinate-relaxation",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "The Main Idea – Coordinate Relaxation",
+    "text": "The Main Idea – Coordinate Relaxation\nInstead of updating all coordinates at once, update only one block of coordinates per iteration.\n\n\nPartition \\(\\mathbb{R}^N\\) into \\(n\\) blocks\n\n\n\n\\[x = ( x^{(1)}, x^{(2)}, ..., x^{(n)} )\\]\n\n\n\nAt each step, pick a random block \\(i_k\\)​ and move only that block.\n\n\n\nIf each coordinate update is cheap (e.g., sparse data), many cheap steps can outperform a few expensive full‑gradient steps."
+  },
+  {
+    "objectID": "index.html#sparse-quadratic-problem",
+    "href": "index.html#sparse-quadratic-problem",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Sparse Quadratic Problem",
+    "text": "Sparse Quadratic Problem\n\n\\[f(x) = \\sum_{i=1}^{n} f_i(x^{(i)}) + \\frac{1}{2} \\| Ax-b \\|^2 \\]\n\n\n\\(f_i\\) are convex differentiable univariate functions\nEach column \\(a_i\\)​ of \\(A\\) is sparse, each with \\(p_i\\) number of non-zero elements.\n\n\n\\[x_+ = x + \\alpha a_i \\]\n\n\n\nOnly requires \\(O(p_i)\\) steps to compute\n\n\n\nNesterov’s insight can be thousands of times faster per effective pass."
   }
 ]

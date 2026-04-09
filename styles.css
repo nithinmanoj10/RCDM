@@ -1,0 +1,57 @@
+.reveal .slide-background {
+    background-size: 40px 40px;
+    background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+
+/* Subtitle */
+#title-slide p.subtitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    font-size: 0.7em;
+    color: rgb(95, 95, 95);
+}
+
+/* Author Name */
+#title-slide .quarto-title-author-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    font-size: 0.5em;
+}
+
+/* Institution */
+#title-slide .quarto-title-institution {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.3em;
+    opacity: 0.5;
+    /* Softens the institution text */
+}
+
+.takeaway {
+    margin-top: 1.5em;
+    font-size: 2.4em;
+    color: #c91423;
+    font-weight: bold;
+    text-align: center;
+}
+
+.intuition {
+    margin-top: 1.0em;
+    font-size: 1.6em;
+    color: #00944a;
+    font-weight: bold;
+    text-align: center;
+}
+
+.aesthetic-quote {
+    font-family: 'Montserrat', sans-serif;
+    /* Or 'Georgia' for a classic serif look */
+    font-style: italic;
+    font-size: 1.2em;
+    font-weight: 300;
+    color: #3d3d3d;
+    line-height: 1.3;
+}
