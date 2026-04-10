@@ -74,7 +74,7 @@
     "href": "index.html#random-coordinate-selection",
     "title": "Randomized Coordinate Descent Methods",
     "section": "Random Coordinate Selection",
-    "text": "Random Coordinate Selection\nAt each iteration we pick a random block \\(i\\) with probability\n\n\\[ p_{\\alpha}^i = \\frac{L_i^\\alpha}{\\sum_{j=1}^n L_j^\\alpha} \\; ,\\alpha \\in \\mathbb{R} \\]"
+    "text": "Random Coordinate Selection\nAt each iteration we pick a random block \\(i\\) with probability\n\n\\[ p_{\\alpha}^i = \\frac{L_i^\\alpha}{\\sum_{j=1}^n L_j^\\alpha} \\; ,\\alpha \\in \\mathbb{R} \\]\n\n\nThus, for a larger \\(\\alpha\\), the algorithm naturally tends to update coordinates with higher curavature (steeper gradients) more frequently."
   },
   {
     "objectID": "index.html#rcd-algorithm",
@@ -82,5 +82,47 @@
     "title": "Randomized Coordinate Descent Methods",
     "section": "RCD Algorithm",
     "text": "RCD Algorithm\n\n\nInput: starting point \\(x_0\\), parameter \\(\\alpha\\)\n\n\nFor \\(k=0,1,2,\\dots\\) do\n\n\n\nChoose random block \\(\\color{#000000}{i_k}\\) with probability \\(p_\\alpha(i)\\)\n\n\n\n\nUpdate: \\[x_{k+1} = x_k - \\frac{1}{L_{\\color{#000000}{i_k}}} U_{\\color{#000000}{i_k}} (f'_{\\color{#000000}{i_k}}(x_k))^\\#\\]\n\n\n\nEnd"
+  },
+  {
+    "objectID": "index.html#theorem-1---convergence-rate-of-rcdm",
+    "href": "index.html#theorem-1---convergence-rate-of-rcdm",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Theorem 1 - Convergence Rate of RCDM",
+    "text": "Theorem 1 - Convergence Rate of RCDM\n\nFor any \\(k \\ge 0\\) we have:\n\n\n\\[\\phi_k - f^* \\le \\frac{2}{k+4} \\cdot \\left[ \\sum_{j=1}^n L_j^\\alpha \\right] \\cdot R_{1-\\alpha}^2(x_0)\\]\n\n\nwhere: \\[R_\\beta(x_0) = \\max_x \\left\\{ \\max_{x^* \\in X^*} \\|x - x^*\\|_\\beta : f(x) \\le f(x_0) \\right\\}\\]\n\n\n\\[ \\phi_k = \\mathbb{E}[f(x_k)] \\]"
+  },
+  {
+    "objectID": "index.html#deconstructing-the-expected-convergence-gap",
+    "href": "index.html#deconstructing-the-expected-convergence-gap",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Deconstructing the Expected Convergence Gap",
+    "text": "Deconstructing the Expected Convergence Gap\n\n\n\\(\\displaystyle \\phi_k - f^* \\le\\)\n\n\n\\(\\displaystyle \\frac{2}{k+4}\\)\n\n\n\\(\\displaystyle \\cdot \\left[ \\sum_{j=1}^n L_j^\\alpha \\right]\\)\n\n\n\\(\\displaystyle \\cdot R_{1-\\alpha}^2(x_0)\\)\n\n\n\n\nExpected suboptimality after \\(k\\) iterations (average gap to optimum)\n\n\nRate factor: decreases as \\(O(\\frac{1}{k})\\), independent of dimension\n\n\nSum of coordinate Lipschitz constants (raised to power \\(\\alpha\\)) which captures smoothness.\n\n\nSquared radius of the initial level set, measured in the \\(\\| \\cdot \\|_{1-\\alpha}\\) norm; quantifies how far we start from optimality."
+  },
+  {
+    "objectID": "index.html#proof-outline",
+    "href": "index.html#proof-outline",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Proof Outline",
+    "text": "Proof Outline\n\nOne-step expected decrease from optimal coordinate step\nLink gradient norm to suboptimality via convexity and level set bound\nCombine to get a recurrence on \\(\\phi_k - f^*\\)\nSolve the recurrence – telescoping + reciprocal trick \\(\\to \\mathcal{O}(1/k)\\)"
+  },
+  {
+    "objectID": "index.html#step-1-onestep-expected-decrease",
+    "href": "index.html#step-1-onestep-expected-decrease",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 1 – One‑step Expected Decrease",
+    "text": "Step 1 – One‑step Expected Decrease\n\n\\[f(x_k) - \\mathbb{E}_{i_k} [f(x_{k+1}) \\mid x_k]\\]\n\n\n\\[ = f(x_k) - \\sum_{i=1}^n Pr[i_k=i \\mid x_k] \\cdot f(x_{k+1})\\]\n\n\n\\[ = \\sum_{i=1}^n p_{\\alpha}^i \\cdot f(x_k) - \\sum_{i=1}^n p_{\\alpha}^i \\cdot f(T_i(x_k))\\]\n\n\n\\[ = \\sum_{i=1}^n p_{\\alpha}^i \\cdot [f(x_k) -  f(T_i(x_k))]\\]\n\n\nUsing the guaranteed decrease we derived earlier\n\n\n\\[ f(x) - f(T_i(x)) \\ge \\frac{1}{2L_i} (\\| f_i^\\prime(x) \\|)^2 \\]"
+  },
+  {
+    "objectID": "index.html#step-1-onestep-expected-decrease-contd.",
+    "href": "index.html#step-1-onestep-expected-decrease-contd.",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 1 – One‑step Expected Decrease Contd.",
+    "text": "Step 1 – One‑step Expected Decrease Contd.\n\n\\[f(x_k) - \\mathbb{E}_{i_k} [f(x_{k+1}) \\mid x_k]\\]\n\n\n\\[ \\ge \\sum_{i=1}^n p_{\\alpha}^i \\cdot \\frac{1}{2L_i} \\cdot \\| f_i^\\prime(x_k) \\|^2\\]\n\n\n\\[ = \\sum_{i=1}^n \\frac{L_i^\\alpha}{S_\\alpha} \\cdot \\frac{1}{2L_i} \\cdot \\| f_i^\\prime(x_k) \\|^2\\]\n\n\n\\[ = \\frac{1}{2S_\\alpha} \\cdot \\sum_{i=1}^n L_i^{-(1-\\alpha)} \\cdot \\| f_i^\\prime(x_k) \\|^2\\]\n\n\nUsing the norm definition \\(\\| g \\|_\\alpha^* = \\sqrt{\\sum_{i=1}^n L_i^{-\\alpha} \\| g^{(i)} \\|^2}\\)\n\n\n\\[ f(x_k) - \\mathbb{E}_{i_k} [f(x_{k+1}) \\mid x_k] \\ge \\frac{1}{2S_\\alpha}(\\| \\nabla f(x_k) \\|^*_{1-\\alpha})^2 \\]"
+  },
+  {
+    "objectID": "index.html#step-2-relating-gradient-norm-and-suboptimality",
+    "href": "index.html#step-2-relating-gradient-norm-and-suboptimality",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 2 – Relating Gradient Norm and Suboptimality",
+    "text": "Step 2 – Relating Gradient Norm and Suboptimality\n\nSince \\(f\\) is convex and for any point \\(x^* \\in X^*\\), we have\n\n\n\\[ f(x_k) - f^* \\le \\langle \\nabla f(x_k), x_k - x^* \\rangle \\]"
   }
 ]

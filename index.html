@@ -282,6 +282,9 @@ Nithin Manoj
 <div class="fragment" style="text-align: center; font-size: 1.6em;">
 <p><span class="math display">\[ p_{\alpha}^i = \frac{L_i^\alpha}{\sum_{j=1}^n L_j^\alpha} \; ,\alpha \in \mathbb{R} \]</span></p>
 </div>
+<div class="fragment intuition">
+<p>Thus, for a larger <span class="math inline">\(\alpha\)</span>, the algorithm naturally tends to update coordinates with higher curavature (steeper gradients) more frequently.</p>
+</div>
 </section>
 <section id="rcd-algorithm" class="slide level2 smaller">
 <h2>RCD Algorithm</h2>
@@ -305,6 +308,112 @@ Nithin Manoj
 <div class="fragment fade-in-then-semi-out">
 <p><strong>End</strong></p>
 </div>
+</div>
+</section>
+<section id="theorem-1---convergence-rate-of-rcdm" class="slide level2 smaller">
+<h2>Theorem 1 - Convergence Rate of RCDM</h2>
+<div class="fragment">
+<p>For any <span class="math inline">\(k \ge 0\)</span> we have:</p>
+</div>
+<div class="fragment" style="font-size: 1.2em; text-align: center; margin: 1em 0;">
+<p><span class="math display">\[\phi_k - f^* \le \frac{2}{k+4} \cdot \left[ \sum_{j=1}^n L_j^\alpha \right] \cdot R_{1-\alpha}^2(x_0)\]</span></p>
+</div>
+<div class="fragment">
+<p>where: <span class="math display">\[R_\beta(x_0) = \max_x \left\{ \max_{x^* \in X^*} \|x - x^*\|_\beta : f(x) \le f(x_0) \right\}\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[ \phi_k = \mathbb{E}[f(x_k)] \]</span></p>
+</div>
+</section>
+<section id="deconstructing-the-expected-convergence-gap" class="slide level2 smaller">
+<h2>Deconstructing the Expected Convergence Gap</h2>
+<div style="display: flex; justify-content: center; align-items: center; font-size: 1.5em; gap: 0.3em; margin: 2em 0;">
+<div class="fragment" data-fragment-index="1">
+<p><span class="math inline">\(\displaystyle \phi_k - f^* \le\)</span></p>
+</div>
+<div class="fragment" data-fragment-index="3">
+<p><span class="math inline">\(\displaystyle \frac{2}{k+4}\)</span></p>
+</div>
+<div class="fragment" data-fragment-index="5">
+<p><span class="math inline">\(\displaystyle \cdot \left[ \sum_{j=1}^n L_j^\alpha \right]\)</span></p>
+</div>
+<div class="fragment" data-fragment-index="7">
+<p><span class="math inline">\(\displaystyle \cdot R_{1-\alpha}^2(x_0)\)</span></p>
+</div>
+</div>
+<div class="r-stack" style="text-align: center; font-size: 1.2em; color: #555; font-weight: bold;">
+<div class="fragment fade-in-then-out" data-fragment-index="2">
+<p>Expected suboptimality after <span class="math inline">\(k\)</span> iterations (average gap to optimum)</p>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="4">
+<p>Rate factor: decreases as <span class="math inline">\(O(\frac{1}{k})\)</span>, independent of dimension</p>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="6">
+<p>Sum of coordinate Lipschitz constants (raised to power <span class="math inline">\(\alpha\)</span>) which captures smoothness.</p>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="8">
+<p>Squared radius of the initial level set, measured in the <span class="math inline">\(\| \cdot \|_{1-\alpha}\)</span> norm; quantifies how far we start from optimality.</p>
+</div>
+</div>
+</section>
+<section id="proof-outline" class="slide level2 smaller">
+<h2>Proof Outline</h2>
+<ul>
+<li class="fragment">One-step expected decrease from optimal coordinate step</li>
+<li class="fragment">Link gradient norm to suboptimality via convexity and level set bound</li>
+<li class="fragment">Combine to get a recurrence on <span class="math inline">\(\phi_k - f^*\)</span></li>
+<li class="fragment">Solve the recurrence – telescoping + reciprocal trick <span class="math inline">\(\to \mathcal{O}(1/k)\)</span></li>
+</ul>
+</section>
+<section id="step-1-onestep-expected-decrease" class="slide level2 smaller">
+<h2>Step 1 – One‑step Expected Decrease</h2>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[f(x_k) - \mathbb{E}_{i_k} [f(x_{k+1}) \mid x_k]\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ = f(x_k) - \sum_{i=1}^n Pr[i_k=i \mid x_k] \cdot f(x_{k+1})\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ = \sum_{i=1}^n p_{\alpha}^i \cdot f(x_k) - \sum_{i=1}^n p_{\alpha}^i \cdot f(T_i(x_k))\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ = \sum_{i=1}^n p_{\alpha}^i \cdot [f(x_k) -  f(T_i(x_k))]\]</span></p>
+</div>
+<div class="fragment">
+<p>Using the guaranteed decrease we derived earlier</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ f(x) - f(T_i(x)) \ge \frac{1}{2L_i} (\| f_i^\prime(x) \|)^2 \]</span></p>
+</div>
+</section>
+<section id="step-1-onestep-expected-decrease-contd." class="slide level2 smaller">
+<h2>Step 1 – One‑step Expected Decrease Contd.</h2>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[f(x_k) - \mathbb{E}_{i_k} [f(x_{k+1}) \mid x_k]\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \ge \sum_{i=1}^n p_{\alpha}^i \cdot \frac{1}{2L_i} \cdot \| f_i^\prime(x_k) \|^2\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ = \sum_{i=1}^n \frac{L_i^\alpha}{S_\alpha} \cdot \frac{1}{2L_i} \cdot \| f_i^\prime(x_k) \|^2\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ = \frac{1}{2S_\alpha} \cdot \sum_{i=1}^n L_i^{-(1-\alpha)} \cdot \| f_i^\prime(x_k) \|^2\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p>Using the norm definition <span class="math inline">\(\| g \|_\alpha^* = \sqrt{\sum_{i=1}^n L_i^{-\alpha} \| g^{(i)} \|^2}\)</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.3em;">
+<p><span class="math display">\[ f(x_k) - \mathbb{E}_{i_k} [f(x_{k+1}) \mid x_k] \ge \frac{1}{2S_\alpha}(\| \nabla f(x_k) \|^*_{1-\alpha})^2 \]</span></p>
+</div>
+</section>
+<section id="step-2-relating-gradient-norm-and-suboptimality" class="slide level2 smaller">
+<h2>Step 2 – Relating Gradient Norm and Suboptimality</h2>
+<div class="fragment">
+<p>Since <span class="math inline">\(f\)</span> is convex and for any point <span class="math inline">\(x^* \in X^*\)</span>, we have</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ f(x_k) - f^* \le \langle \nabla f(x_k), x_k - x^* \rangle \]</span></p>
 </div>
 
 
