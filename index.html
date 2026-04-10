@@ -618,6 +618,172 @@ Nithin Manoj
 <div class="fragment" style="text-align: center; font-size: 1.6em;">
 <p><span class="math display">\[ \phi_k - f^* \le \frac{2}{k+4} \cdot [\sum_{i=1}^n L_i^\alpha] \cdot R_{1-\alpha}^2(x_0)\]</span></p>
 </div>
+</section>
+<section id="simulation-and-experiments" class="slide level2">
+<h2>Simulation and Experiments</h2>
+</section>
+<section id="recent-extension" class="slide level2">
+<h2>Recent Extension</h2>
+<div style="text-align: center;">
+<p><img data-src="images/nesterov_paper.png" style="width:70.0%"></p>
+<p><br>
+</p>
+<p><img data-src="images/extension_paper.png" style="width:70.0%"></p>
+</div>
+</section>
+<section id="problem-setting" class="slide level2 smaller">
+<h2>Problem Setting</h2>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ \min_{x \in \mathbb{R}^N} P(x) = f(x) + \psi(x) \]</span></p>
+</div>
+<div class="fragment">
+<p>Properties of <span class="math inline">\(f(x)\)</span></p>
+</div>
+<ul>
+<li class="fragment">Convex</li>
+<li class="fragment">Differentiable</li>
+<li class="fragment">Smooth</li>
+</ul>
+<div class="fragment">
+<p>Properties of <span class="math inline">\(\psi(x)\)</span></p>
+</div>
+<ul>
+<li class="fragment">Convex</li>
+<li class="fragment">Possibly non-smooth</li>
+<li class="fragment">Possibly non-separable</li>
+</ul>
+</section>
+<section id="limitations" class="slide level2 smaller">
+<h2>Limitations</h2>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[x_{k+1} = x_k - \frac{1}{L_{\color{#000000}{i_k}}} U_{\color{#000000}{i_k}} (f'_{\color{#000000}{i_k}}(x_k))\]</span></p>
+</div>
+<div class="fragment">
+<p>Problems</p>
+</div>
+<ul>
+<li class="fragment">Updates only one coordinate block</li>
+<li class="fragment">Assumes coordinates are independent</li>
+<li class="fragment">Fails when <span class="math inline">\(\psi(x)\)</span> is non-separable</li>
+</ul>
+</section>
+<section id="limitations-contd." class="slide level2 smaller">
+<h2>Limitations Contd.</h2>
+<div class="fragment">
+<p>Gradient based methods uses the full gradient</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[\nabla f(x)\]</span></p>
+</div>
+<div class="fragment">
+<p>Whereas, RCDM uses only partial gradients</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[f'_i(x) = U_i^T \nabla f(x) \in \mathbb{R}^{n_i}, \quad x \in \mathbb{R}^N\]</span></p>
+</div>
+<div class="fragment">
+<p>Problems that arise:</p>
+</div>
+<ul>
+<li class="fragment">Since the partial gradient <span class="math inline">\(\neq\)</span> full gradient, it introduces some noise (variance).</li>
+<li class="fragment">Consequently, the updates become unstable.</li>
+<li class="fragment">Effectively, showcases Zig-Zag behaviour and slower convergence.</li>
+</ul>
+</section>
+<section id="limitations-contd.-1" class="slide level2 smaller">
+<h2>Limitations Contd.</h2>
+<div class="fragment">
+<p>The current convergence rate is</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[O(1/k)\]</span></p>
+</div>
+<div class="fragment">
+<p>Problems that arise:</p>
+</div>
+<ul>
+<li class="fragment">No acceleration mechanism</li>
+<li class="fragment">Uses only the current iterate</li>
+<li class="fragment">Consequently, this requires many more iterations and is inefficient for large-scale problems</li>
+</ul>
+</section>
+<section id="solution-1---proximal-operator" class="slide level2 smaller">
+<h2>Solution 1 - Proximal Operator</h2>
+<p><strong>Update Rule</strong></p>
+<div style="font-size: 1.5em; text-align: center; margin: 1em 0;">
+<p><span class="math display">\[x_{k+1} = \text{prox}_{\eta \psi}(x_k - \eta g_k)\]</span></p>
+</div>
+<p>&nbsp;</p>
+<p><strong>What it does</strong></p>
+<ul>
+<li class="fragment">Enforces structure of <span class="math inline">\(\psi(x)\)</span></li>
+<li class="fragment">Maintains feasibility</li>
+<li class="fragment">Handles non-separable regularization</li>
+</ul>
+</section>
+<section id="solution-2-variance-reduction" class="slide level2 smaller">
+<h2>Solution 2: Variance Reduction</h2>
+<p><strong>The Idea</strong> : Use past gradient information to correct the current estimate.</p>
+<div class="fragment">
+<p><strong>Gradient Estimator</strong> <span class="math display">\[g_k = d \cdot \nabla_i f(x_k) e_i - d \cdot h_i^k e_i + h^k\]</span></p>
+</div>
+<div class="fragment">
+<p><strong>Where:</strong></p>
+</div>
+<ul>
+<li class="fragment"><span class="math inline">\(\nabla_i f(x_k)\)</span>: current partial gradient</li>
+<li class="fragment"><span class="math inline">\(h_i^k\)</span>: stored past gradient for coordinate <span class="math inline">\(i\)</span></li>
+<li class="fragment"><span class="math inline">\(h^k\)</span>: average of stored gradients</li>
+</ul>
+<div class="fragment">
+<p><strong>Intuition</strong> : New estimate = current info - old info + memory and Noise cancels out over time.</p>
+</div>
+<div class="fragment">
+<p><strong>Key Property</strong> <span class="math display">\[\text{Var}(g_k) \rightarrow 0\]</span></p>
+</div>
+</section>
+<section id="solution-3-acceleration" class="slide level2 smaller">
+<h2>Solution 3: Acceleration</h2>
+<div class="fragment">
+<p><strong>The Idea</strong></p>
+</div>
+<ul>
+<li class="fragment">Use momentum</li>
+<li class="fragment">Combine past iterates</li>
+</ul>
+<div class="fragment">
+<p><strong>Effect</strong></p>
+</div>
+<ul>
+<li class="fragment">Faster convergence</li>
+<li class="fragment">More efficient updates</li>
+</ul>
+</section>
+<section id="final-summary" class="slide level2 smaller">
+<h2>Final Summary</h2>
+<div class="fragment">
+<p><strong>ASVRCD Combines</strong></p>
+</div>
+<ul>
+<li class="fragment">Proximal updates</li>
+<li class="fragment">Variance reduction</li>
+<li class="fragment">Acceleration</li>
+</ul>
+<div class="fragment">
+<p><strong>Takeaway</strong></p>
+</div>
+</section>
+<section id="summary" class="slide level2 smaller">
+<h2>Summary</h2>
+<div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+<p><img data-src="images/yurri_peter.png" style="margin-bottom: 1em;" width="450"></p>
+<div class="aesthetic-quote" style="width: 90%;">
+<p>“ASVRCD combines proximal updates, variance reduction and acceleration that enables randomized coordinate descent to handle complex regularization while improving convergence speed and stability”</p>
+</div>
+</div>
+</section>
+<section id="thank-you" class="slide level2" data-text-align="center">
+<h2>Thank You!</h2>
 
 
 </section>
