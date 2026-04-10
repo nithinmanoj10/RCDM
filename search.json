@@ -28,6 +28,20 @@
     "text": "The Problem we are Trying to Solve\n\n\\[ \\min_{x \\in \\mathbb{R}^N} f(x) \\]\n\n\n\\(f\\) is convex and differentiable\nOptimal set \\(X^*\\) is nonempty and bounded\nWe will be dealing with Euclidean space and norm"
   },
   {
+    "objectID": "index.html#random-coordinate-selection",
+    "href": "index.html#random-coordinate-selection",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Random Coordinate Selection",
+    "text": "Random Coordinate Selection\nAt each iteration we pick a random block \\(i\\) with probability\n\n\\[ p_{\\alpha}^i = \\frac{L_i^\\alpha}{\\sum_{j=1}^n L_j^\\alpha} \\; ,\\alpha \\in \\mathbb{R} \\]\n\n\nThus, for a larger \\(\\alpha\\), the algorithm naturally tends to update coordinates with higher curavature (steeper gradients) more frequently."
+  },
+  {
+    "objectID": "index.html#rcd-algorithm",
+    "href": "index.html#rcd-algorithm",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "RCD Algorithm",
+    "text": "RCD Algorithm\n\n\nInput: starting point \\(x_0\\), parameter \\(\\alpha\\)\n\n\nFor \\(k=0,1,2,\\dots\\) do\n\n\n\nChoose random block \\(\\color{#000000}{i_k}\\) with probability \\(p_\\alpha(i)\\)\n\n\n\n\nUpdate: \\[x_{k+1} = x_k - \\frac{1}{L_{\\color{#000000}{i_k}}} U_{\\color{#000000}{i_k}} (f'_{\\color{#000000}{i_k}}(x_k))\\]\n\n\n\nEnd"
+  },
+  {
     "objectID": "index.html#mathematical-notations",
     "href": "index.html#mathematical-notations",
     "title": "Randomized Coordinate Descent Methods",
@@ -68,20 +82,6 @@
     "title": "Randomized Coordinate Descent Methods",
     "section": "Guaranteed Decrease",
     "text": "Guaranteed Decrease\n\n\\[ f(x) - f(T_i(x)) \\ge \\frac{1}{2L_i} (\\| f_i^\\prime(x) \\|_{i})^2 \\]\n\n\nSo the decrease is proportional to the squared size of the partial gradient."
-  },
-  {
-    "objectID": "index.html#random-coordinate-selection",
-    "href": "index.html#random-coordinate-selection",
-    "title": "Randomized Coordinate Descent Methods",
-    "section": "Random Coordinate Selection",
-    "text": "Random Coordinate Selection\nAt each iteration we pick a random block \\(i\\) with probability\n\n\\[ p_{\\alpha}^i = \\frac{L_i^\\alpha}{\\sum_{j=1}^n L_j^\\alpha} \\; ,\\alpha \\in \\mathbb{R} \\]\n\n\nThus, for a larger \\(\\alpha\\), the algorithm naturally tends to update coordinates with higher curavature (steeper gradients) more frequently."
-  },
-  {
-    "objectID": "index.html#rcd-algorithm",
-    "href": "index.html#rcd-algorithm",
-    "title": "Randomized Coordinate Descent Methods",
-    "section": "RCD Algorithm",
-    "text": "RCD Algorithm\n\n\nInput: starting point \\(x_0\\), parameter \\(\\alpha\\)\n\n\nFor \\(k=0,1,2,\\dots\\) do\n\n\n\nChoose random block \\(\\color{#000000}{i_k}\\) with probability \\(p_\\alpha(i)\\)\n\n\n\n\nUpdate: \\[x_{k+1} = x_k - \\frac{1}{L_{\\color{#000000}{i_k}}} U_{\\color{#000000}{i_k}} (f'_{\\color{#000000}{i_k}}(x_k))\\]\n\n\n\nEnd"
   },
   {
     "objectID": "index.html#lemma-2",

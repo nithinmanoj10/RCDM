@@ -200,6 +200,40 @@ Nithin Manoj
 <li class="fragment">We will be dealing with Euclidean space and norm</li>
 </ul>
 </section>
+<section id="random-coordinate-selection" class="slide level2 smaller">
+<h2>Random Coordinate Selection</h2>
+<p>At each iteration we pick a random block <span class="math inline">\(i\)</span> with probability</p>
+<div class="fragment" style="text-align: center; font-size: 1.6em;">
+<p><span class="math display">\[ p_{\alpha}^i = \frac{L_i^\alpha}{\sum_{j=1}^n L_j^\alpha} \; ,\alpha \in \mathbb{R} \]</span></p>
+</div>
+<div class="fragment intuition">
+<p>Thus, for a larger <span class="math inline">\(\alpha\)</span>, the algorithm naturally tends to update coordinates with higher curavature (steeper gradients) more frequently.</p>
+</div>
+</section>
+<section id="rcd-algorithm" class="slide level2 smaller">
+<h2>RCD Algorithm</h2>
+<div style="background: rgba(0,0,0,0.03); padding: 30px; border-radius: 10px; border-left: 5px solid #007acc;">
+<div class="fragment fade-in-then-semi-out">
+<p><strong>Input:</strong> starting point <span class="math inline">\(x_0\)</span>, parameter <span class="math inline">\(\alpha\)</span></p>
+</div>
+<div class="fragment fade-in-then-semi-out">
+<p><strong>For</strong> <span class="math inline">\(k=0,1,2,\dots\)</span> <strong>do</strong></p>
+</div>
+<div class="fragment fade-in-then-semi-out" style="margin-left: 2em;">
+<ol type="1">
+<li>Choose random block <span class="math inline">\(\color{#000000}{i_k}\)</span> with probability <span class="math inline">\(p_\alpha(i)\)</span></li>
+</ol>
+</div>
+<div class="fragment fade-in-then-semi-out" style="margin-left: 2em;">
+<ol start="2" type="1">
+<li>Update: <span class="math display">\[x_{k+1} = x_k - \frac{1}{L_{\color{#000000}{i_k}}} U_{\color{#000000}{i_k}} (f'_{\color{#000000}{i_k}}(x_k))\]</span></li>
+</ol>
+</div>
+<div class="fragment fade-in-then-semi-out">
+<p><strong>End</strong></p>
+</div>
+</div>
+</section>
 <section id="mathematical-notations" class="slide level2 smaller">
 <h2>Mathematical Notations</h2>
 <p>We will make use of these norms later on during our convergence analysis</p>
@@ -276,40 +310,6 @@ Nithin Manoj
 </div>
 <div class="fragment intuition">
 <p>So the decrease is proportional to the squared size of the partial gradient.</p>
-</div>
-</section>
-<section id="random-coordinate-selection" class="slide level2 smaller">
-<h2>Random Coordinate Selection</h2>
-<p>At each iteration we pick a random block <span class="math inline">\(i\)</span> with probability</p>
-<div class="fragment" style="text-align: center; font-size: 1.6em;">
-<p><span class="math display">\[ p_{\alpha}^i = \frac{L_i^\alpha}{\sum_{j=1}^n L_j^\alpha} \; ,\alpha \in \mathbb{R} \]</span></p>
-</div>
-<div class="fragment intuition">
-<p>Thus, for a larger <span class="math inline">\(\alpha\)</span>, the algorithm naturally tends to update coordinates with higher curavature (steeper gradients) more frequently.</p>
-</div>
-</section>
-<section id="rcd-algorithm" class="slide level2 smaller">
-<h2>RCD Algorithm</h2>
-<div style="background: rgba(0,0,0,0.03); padding: 30px; border-radius: 10px; border-left: 5px solid #007acc;">
-<div class="fragment fade-in-then-semi-out">
-<p><strong>Input:</strong> starting point <span class="math inline">\(x_0\)</span>, parameter <span class="math inline">\(\alpha\)</span></p>
-</div>
-<div class="fragment fade-in-then-semi-out">
-<p><strong>For</strong> <span class="math inline">\(k=0,1,2,\dots\)</span> <strong>do</strong></p>
-</div>
-<div class="fragment fade-in-then-semi-out" style="margin-left: 2em;">
-<ol type="1">
-<li>Choose random block <span class="math inline">\(\color{#000000}{i_k}\)</span> with probability <span class="math inline">\(p_\alpha(i)\)</span></li>
-</ol>
-</div>
-<div class="fragment fade-in-then-semi-out" style="margin-left: 2em;">
-<ol start="2" type="1">
-<li>Update: <span class="math display">\[x_{k+1} = x_k - \frac{1}{L_{\color{#000000}{i_k}}} U_{\color{#000000}{i_k}} (f'_{\color{#000000}{i_k}}(x_k))\]</span></li>
-</ol>
-</div>
-<div class="fragment fade-in-then-semi-out">
-<p><strong>End</strong></p>
-</div>
 </div>
 </section>
 <section id="lemma-2" class="slide level2 smaller">
