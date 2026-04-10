@@ -151,7 +151,7 @@
     "href": "index.html#step-3---find-recurrence-in-expectation",
     "title": "Randomized Coordinate Descent Methods",
     "section": "Step 3 - Find Recurrence in Expectation",
-    "text": "Step 3 - Find Recurrence in Expectation\n\nDefine the following\n\n\n\\[ \\phi_k = \\mathbb{E}_{\\xi_{k-1}} [f(x_k)] \\]\n\n\n\\[ \\phi_{k+1} = \\mathbb{E}_{\\xi_{k}} [f(x_{k+1})] \\]\n\n\nApply \\(\\mathbb{E}_{\\xi_{k-1}}\\) to the derived inequality from Step 1 and Step 2\n\n\n\\[ f(x_k) - \\mathbb{E}_{i_k} [f(x_{k+1}) \\mid x_k] \\ge \\frac{1}{2S_\\alpha R^2}(f(x_k) - f^*)^2 \\]\n\n\nto get\n\n\n\\[ \\phi_k - \\phi_{k+1} \\ge \\frac{1}{2S_\\alpha R^2} \\cdot \\mathbb{E}_{\\xi_{k-1}} [(f(x_k) - f^*)^2] \\]\n\n\nUse Jensen’s Inequality\n\n\n\\[ \\phi_k - \\phi_{k+1} \\ge \\frac{1}{2S_\\alpha R^2} \\cdot (\\mathbb{E}_{\\xi_{k-1}} [f(x_k) - f^*])^2 = \\frac{1}{2S_\\alpha R^2} (\\phi_k - f^*)^2 \\]"
+    "text": "Step 3 - Find Recurrence in Expectation\n\nDefine the following\n\n\n\\[ \\phi_k = \\mathbb{E}_{\\xi_{k-1}} [f(x_k)] \\]\n\n\n\\[ \\phi_{k+1} = \\mathbb{E}_{\\xi_{k}} [f(x_{k+1})] \\]\n\n\n\\[\n\\xi_k = \\{i_0, \\dots, i_k\\}\n\\]\n\n\nApply \\(\\mathbb{E}_{\\xi_{k-1}}\\) to the derived inequality from Step 1 and Step 2\n\n\n\\[ f(x_k) - \\mathbb{E}_{i_k} [f(x_{k+1}) \\mid x_k] \\ge \\frac{1}{2S_\\alpha R^2}(f(x_k) - f^*)^2 \\]\n\n\nto get\n\n\n\\[ \\phi_k - \\phi_{k+1} \\ge \\frac{1}{2S_\\alpha R^2} \\cdot \\mathbb{E}_{\\xi_{k-1}} [(f(x_k) - f^*)^2] \\]\n\n\nUse Jensen’s Inequality\n\n\n\\[ \\phi_k - \\phi_{k+1} \\ge \\frac{1}{2S_\\alpha R^2} \\cdot (\\mathbb{E}_{\\xi_{k-1}} [f(x_k) - f^*])^2 = \\frac{1}{2S_\\alpha R^2} (\\phi_k - f^*)^2 \\]"
   },
   {
     "objectID": "index.html#step-3---find-recurrence-in-expectation-contd.",
