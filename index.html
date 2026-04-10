@@ -218,18 +218,38 @@ Nithin Manoj
 <ul>
 <li class="fragment"><span class="math inline">\(f\)</span> is convex and differentiable</li>
 <li class="fragment">Optimal set <span class="math inline">\(X^*\)</span> is nonempty and bounded</li>
+<li class="fragment">We will be dealing with Euclidean space and norm</li>
 </ul>
 </section>
-<section id="mathematical-notation" class="slide level2">
-<h2>Mathematical Notation</h2>
-<div class="fragment" style="text-align: center; font-size: 1.2em;">
-<p><span class="math display">\[ \langle x,y \rangle = \sum_{i=1}^n x^{(i)}y^{(i)} \]</span></p>
+<section id="mathematical-notations" class="slide level2 smaller">
+<h2>Mathematical Notations</h2>
+<p>We will make use of these norms later on during our convergence analysis</p>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[\|x\|_\alpha = \left[ \sum_{i=1}^n L_i^\alpha \|x^{(i)}\|^2 \right]^{1/2}, \quad x \in \mathbb{R}^N\]</span></p>
 </div>
-<div class="fragment" style="text-align: center; font-size: 1.2em;">
-<p><span class="math display">\[ \| s \|^*  = \max_{\| h\| = 1} \langle s,x\rangle\]</span></p>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[\|g\|_\alpha^* = \left[ \sum_{i=1}^n L_i^{-\alpha} (\|g^{(i)}\|^*)^2 \right]^{1/2}, \quad g \in \mathbb{R}^N\]</span></p>
 </div>
-<div class="fragment" style="text-align: center; font-size: 1.2em;">
-<p><span class="math display">\[ s^\# \in arg\max_x \; [\langle s,x\rangle - \frac{1}{2}\| x\|^2]\]</span></p>
+<div class="fragment">
+<p>We also define the following sum</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ S_\alpha = \sum_{i=1}^n L_i^\alpha \]</span></p>
+</div>
+</section>
+<section id="mathematical-notations-contd." class="slide level2 smaller">
+<h2>Mathematical Notations Contd.</h2>
+<div class="fragment">
+<p><span class="math inline">\(U_i\)</span>​ is the embedding matrix that maps a vector from the <span class="math inline">\(i^{th}\)</span> block subspace into the full <span class="math inline">\(N\)</span>-dimensional space, placing its entries in the correct coordinate positions and zero elsewhere.</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[U_i = \begin{bmatrix} 0 \\ \vdots \\ I_{n_i} \\ \vdots \\ 0 \end{bmatrix}\]</span></p>
+</div>
+<div class="fragment">
+<p>Then the partial gradient of <span class="math inline">\(f(x)\)</span> in <span class="math inline">\(x^{(i)}\)</span> is defined as</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[f'_i(x) = U_i^T \nabla f(x) \in \mathbb{R}^{n_i}, \quad x \in \mathbb{R}^N\]</span></p>
 </div>
 </section>
 <section id="coordinatewise-smoothness" class="slide level2 smaller">
@@ -258,19 +278,19 @@ Nithin Manoj
 <h2>Optimal Coordinate Step</h2>
 <p>We choose <span class="math inline">\(h_i\)</span>​ to minimize the right‑hand side</p>
 <div class="fragment" style="text-align: center; font-size: 1.3em;">
-<p><span class="math display">\[ h^*_i = -\frac{1}{L_i} f_i^\prime(x)^\#\]</span></p>
+<p><span class="math display">\[ h^*_i = -\frac{1}{L_i} f_i^\prime(x)\]</span></p>
 </div>
 <ul>
 <li class="fragment">We can now define the optimal coordinate steps as</li>
 </ul>
 <div class="fragment" style="text-align: center; font-size: 1.3em;">
-<p><span class="math display">\[ T_i(x) = x - \frac{1}{L_i}U_if_i^\prime(x)^\# \]</span></p>
+<p><span class="math display">\[ T_i(x) = x - \frac{1}{L_i}U_if_i^\prime(x) \]</span></p>
 </div>
 </section>
 <section id="guaranteed-decrease" class="slide level2 smaller">
 <h2>Guaranteed Decrease</h2>
 <div class="fragment" style="text-align: center; font-size: 1.3em;">
-<p><span class="math display">\[ f(x) - f(T_i(x)) \ge \frac{1}{2L_i} (\| f_i^\prime(x) \|^*_{i})^2 \]</span></p>
+<p><span class="math display">\[ f(x) - f(T_i(x)) \ge \frac{1}{2L_i} (\| f_i^\prime(x) \|_{i})^2 \]</span></p>
 </div>
 <div class="fragment intuition">
 <p>So the decrease is proportional to the squared size of the partial gradient.</p>
@@ -302,12 +322,27 @@ Nithin Manoj
 </div>
 <div class="fragment fade-in-then-semi-out" style="margin-left: 2em;">
 <ol start="2" type="1">
-<li>Update: <span class="math display">\[x_{k+1} = x_k - \frac{1}{L_{\color{#000000}{i_k}}} U_{\color{#000000}{i_k}} (f'_{\color{#000000}{i_k}}(x_k))^\#\]</span></li>
+<li>Update: <span class="math display">\[x_{k+1} = x_k - \frac{1}{L_{\color{#000000}{i_k}}} U_{\color{#000000}{i_k}} (f'_{\color{#000000}{i_k}}(x_k))\]</span></li>
 </ol>
 </div>
 <div class="fragment fade-in-then-semi-out">
 <p><strong>End</strong></p>
 </div>
+</div>
+</section>
+<section id="lemma-2" class="slide level2 smaller">
+<h2>Lemma 2</h2>
+<div class="fragment">
+<p>Let <span class="math inline">\(f\)</span> satisfy Coordinate‑wise Smoothness. Then for any <span class="math inline">\(\alpha \in \mathbb{R}\)</span> we have:</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.3em;">
+<p><span class="math display">\[\|\nabla f(x) - \nabla f(y)\|_{1-\alpha}^* \le S_\alpha \|x - y\|_{1-\alpha}, \quad x, y \in \mathbb{R}^N\]</span></p>
+</div>
+<div class="fragment">
+<p>Therefore, we have the following quadratic upper bound:</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.3em;">
+<p><span class="math display">\[f(x) \le f(y) + \langle \nabla f(y), x - y \rangle + \frac{1}{2} S_\alpha \|x - y\|_{1-\alpha}^2, \quad x, y \in \mathbb{R}^N\]</span></p>
 </div>
 </section>
 <section id="theorem-1---convergence-rate-of-rcdm" class="slide level2 smaller">
@@ -412,8 +447,176 @@ Nithin Manoj
 <div class="fragment">
 <p>Since <span class="math inline">\(f\)</span> is convex and for any point <span class="math inline">\(x^* \in X^*\)</span>, we have</p>
 </div>
-<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
 <p><span class="math display">\[ f(x_k) - f^* \le \langle \nabla f(x_k), x_k - x^* \rangle \]</span></p>
+</div>
+<div class="fragment">
+<p>Using the Cauchy-Schwartz inequality seen earlier</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ \langle g,x \rangle \le \| g \|^*_\alpha \cdot \| x \|_\alpha \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ \langle \nabla f(x_k), x_k - x^* \rangle \le \| \nabla f(x_k) \|^*_{1-\alpha} \cdot \| x_k - x^* \|_{1-\alpha} \]</span></p>
+</div>
+<div class="fragment">
+<p>Since <span class="math inline">\(f(x_k) \le f(x_0)\)</span>, <span class="math inline">\(x_k\)</span> lies in the initial level set</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ \| x_k - x^* \|_{1-\alpha} \le R_{1-\alpha}(x_0) = R \]</span></p>
+</div>
+</section>
+<section id="step-2-relating-gradient-norm-and-suboptimality-contd." class="slide level2 smaller">
+<h2>Step 2 – Relating Gradient Norm and Suboptimality Contd.</h2>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ f(x_k) - f^* \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \le \langle \nabla f(x_k), x_k - x^* \rangle \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \le \| \nabla f(x_k) \|^*_{1-\alpha} \cdot \| x_k - x^* \|_{1-\alpha} \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \le \| \nabla f(x_k) \|^*_{1-\alpha} \cdot R \]</span></p>
+</div>
+<div class="fragment">
+<p>Squaring both sides and rearranging</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.3em;">
+<p><span class="math display">\[ (\| \nabla f(x_k) \|^*_{1-\alpha})^2 \ge \frac{(f(x_k) - f^*)^2}{R^2} \]</span></p>
+</div>
+</section>
+<section id="using-step-2-in-step-1" class="slide level2 smaller">
+<h2>Using Step 2 in Step 1</h2>
+<div class="fragment">
+<p>From Step 1</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ f(x_k) - \mathbb{E}_{i_k} [f(x_{k+1}) \mid x_k] \ge \frac{1}{2S_\alpha}(\| \nabla f(x_k) \|^*_{1-\alpha})^2 \]</span></p>
+</div>
+<div class="fragment">
+<p>From Step 2</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ (\| \nabla f(x_k) \|^*_{1-\alpha})^2 \ge \frac{(f(x_k) - f^*)^2}{R^2} \]</span></p>
+</div>
+<div class="fragment">
+<p>Using the above two steps to get</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ f(x_k) - \mathbb{E}_{i_k} [f(x_{k+1}) \mid x_k] \ge \frac{1}{2S_\alpha R^2}(f(x_k) - f^*)^2 \]</span></p>
+</div>
+</section>
+<section id="step-3---find-recurrence-in-expectation" class="slide level2 smaller">
+<h2>Step 3 - Find Recurrence in Expectation</h2>
+<div class="fragment">
+<p>Define the following</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \phi_k = \mathbb{E}_{\xi_{k-1}} [f(x_k)] \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \phi_{k+1} = \mathbb{E}_{\xi_{k}} [f(x_{k+1})] \]</span></p>
+</div>
+<div class="fragment">
+<p>Apply <span class="math inline">\(\mathbb{E}_{\xi_{k-1}}\)</span> to the derived inequality from Step 1 and Step 2</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ f(x_k) - \mathbb{E}_{i_k} [f(x_{k+1}) \mid x_k] \ge \frac{1}{2S_\alpha R^2}(f(x_k) - f^*)^2 \]</span></p>
+</div>
+<div class="fragment">
+<p>to get</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \phi_k - \phi_{k+1} \ge \frac{1}{2S_\alpha R^2} \cdot \mathbb{E}_{\xi_{k-1}} [(f(x_k) - f^*)^2] \]</span></p>
+</div>
+<div class="fragment">
+<p>Use Jensen’s Inequality</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \phi_k - \phi_{k+1} \ge \frac{1}{2S_\alpha R^2} \cdot (\mathbb{E}_{\xi_{k-1}} [f(x_k) - f^*])^2 = \frac{1}{2S_\alpha R^2} (\phi_k - f^*)^2 \]</span></p>
+</div>
+</section>
+<section id="step-3---find-recurrence-in-expectation-contd." class="slide level2 smaller">
+<h2>Step 3 - Find Recurrence in Expectation Contd.</h2>
+<div class="fragment" style="text-align: center; font-size: 1.6em;">
+<p><span class="math display">\[ \phi_k - \phi_{k+1} \ge \frac{1}{C} (\phi_k - f^*)^2, \; where \; C = 2S_\alpha R^2\]</span></p>
+</div>
+</section>
+<section id="step-4---solve-the-recurrence" class="slide level2 smaller">
+<h2>Step 4 - Solve the Recurrence</h2>
+<div class="fragment">
+<p>Define</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \delta_k = \phi_k - f^* \ge 0 \]</span></p>
+</div>
+<div class="fragment">
+<p>The recurrence relation from Step 3 becomes</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \delta_k - \delta_{k+1} \ge \frac{1}{C} \delta_k^2 \]</span></p>
+</div>
+<div class="fragment">
+<p>Note that</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \delta_k &gt; 0 \; and \; \delta_{k+1} \le \delta_k\]</span></p>
+</div>
+<div class="fragment">
+<p>Follow through with some algebra</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \frac{1}{\delta_{k+1}} - \frac{1}{\delta_k} = \frac{\delta_k - \delta_{k+1}}{\delta_k \delta_{k+1}} \ge \frac{\delta_k^2}{C \delta_k \delta_{k+1}} \ge \frac{1}{C} \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ \frac{1}{\delta_{k+1}} \ge \frac{1}{\delta_{k}} + \frac{1}{C} \]</span></p>
+</div>
+</section>
+<section id="step-4---solve-the-recurrence-contd." class="slide level2 smaller">
+<h2>Step 4 - Solve the Recurrence Contd.</h2>
+<div class="fragment">
+<p>Using telescopic sum trick, we get</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \frac{1}{\delta_{k+1}} \ge \frac{1}{\delta_{0}} + \frac{k}{C} \]</span></p>
+</div>
+<div class="fragment">
+<p>We would like to get a bound on <span class="math inline">\(\delta_0\)</span>. We can use Lemma 2</p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ f(x) \le f(y) + \langle \nabla f(y), x-y \rangle + \frac{1}{2} S_\alpha \| x-y \|^2_{1-\alpha} \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ f(x_0) \le f(x^*) + \langle \nabla f(x^*), x_0-x^* \rangle + \frac{1}{2} S_\alpha \| x_0-x^* \|^2_{1-\alpha} \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ f(x_0) \le f(x^*) + \frac{1}{2} S_\alpha \| x_0-x^* \|^2_{1-\alpha} \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ f(x_0) - f(x^*) \le + \frac{1}{2} S_\alpha R^2 \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \delta_0 \le + \frac{1}{2} S_\alpha R^2 \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \frac{1}{\delta_0} \ge \frac{2}{S_\alpha R^2} = \frac{4}{2S_\alpha R^2} = \frac{4}{C} \]</span></p>
+</div>
+</section>
+<section id="step-4---solve-the-recurrence-contd.-1" class="slide level2 smaller">
+<h2>Step 4 - Solve the Recurrence Contd.</h2>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \frac{1}{\delta_0} \ge \frac{4}{C} \]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \frac{1}{\delta_{k+1}} \ge \frac{1}{\delta_{0}} + \frac{k}{C} \ge \frac{4}{C} + \frac{k}{C} = \frac{k+4}{C}\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[ \delta_k \le \frac{C}{k+4} = \frac{2S_\alpha R^2}{k+4}\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.6em;">
+<p><span class="math display">\[ \phi_k - f^* \le \frac{2}{k+4} \cdot [\sum_{i=1}^n L_i^\alpha] \cdot R_{1-\alpha}^2(x_0)\]</span></p>
 </div>
 
 

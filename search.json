@@ -32,14 +32,21 @@
     "href": "index.html#the-problem-we-are-trying-to-solve",
     "title": "Randomized Coordinate Descent Methods",
     "section": "The Problem we are Trying to Solve",
-    "text": "The Problem we are Trying to Solve\n\n\\[ \\min_{x \\in \\mathbb{R}^N} f(x) \\]\n\n\n\\(f\\) is convex and differentiable\nOptimal set \\(X^*\\) is nonempty and bounded"
+    "text": "The Problem we are Trying to Solve\n\n\\[ \\min_{x \\in \\mathbb{R}^N} f(x) \\]\n\n\n\\(f\\) is convex and differentiable\nOptimal set \\(X^*\\) is nonempty and bounded\nWe will be dealing with Euclidean space and norm"
   },
   {
-    "objectID": "index.html#mathematical-notation",
-    "href": "index.html#mathematical-notation",
+    "objectID": "index.html#mathematical-notations",
+    "href": "index.html#mathematical-notations",
     "title": "Randomized Coordinate Descent Methods",
-    "section": "Mathematical Notation",
-    "text": "Mathematical Notation\n\n\\[ \\langle x,y \\rangle = \\sum_{i=1}^n x^{(i)}y^{(i)} \\]\n\n\n\\[ \\| s \\|^*  = \\max_{\\| h\\| = 1} \\langle s,x\\rangle\\]\n\n\n\\[ s^\\# \\in arg\\max_x \\; [\\langle s,x\\rangle - \\frac{1}{2}\\| x\\|^2]\\]"
+    "section": "Mathematical Notations",
+    "text": "Mathematical Notations\nWe will make use of these norms later on during our convergence analysis\n\n\\[\\|x\\|_\\alpha = \\left[ \\sum_{i=1}^n L_i^\\alpha \\|x^{(i)}\\|^2 \\right]^{1/2}, \\quad x \\in \\mathbb{R}^N\\]\n\n\n\\[\\|g\\|_\\alpha^* = \\left[ \\sum_{i=1}^n L_i^{-\\alpha} (\\|g^{(i)}\\|^*)^2 \\right]^{1/2}, \\quad g \\in \\mathbb{R}^N\\]\n\n\nWe also define the following sum\n\n\n\\[ S_\\alpha = \\sum_{i=1}^n L_i^\\alpha \\]"
+  },
+  {
+    "objectID": "index.html#mathematical-notations-contd.",
+    "href": "index.html#mathematical-notations-contd.",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Mathematical Notations Contd.",
+    "text": "Mathematical Notations Contd.\n\n\\(U_i\\)​ is the embedding matrix that maps a vector from the \\(i^{th}\\) block subspace into the full \\(N\\)-dimensional space, placing its entries in the correct coordinate positions and zero elsewhere.\n\n\n\\[U_i = \\begin{bmatrix} 0 \\\\ \\vdots \\\\ I_{n_i} \\\\ \\vdots \\\\ 0 \\end{bmatrix}\\]\n\n\nThen the partial gradient of \\(f(x)\\) in \\(x^{(i)}\\) is defined as\n\n\n\\[f'_i(x) = U_i^T \\nabla f(x) \\in \\mathbb{R}^{n_i}, \\quad x \\in \\mathbb{R}^N\\]"
   },
   {
     "objectID": "index.html#coordinatewise-smoothness",
@@ -60,14 +67,14 @@
     "href": "index.html#optimal-coordinate-step",
     "title": "Randomized Coordinate Descent Methods",
     "section": "Optimal Coordinate Step",
-    "text": "Optimal Coordinate Step\nWe choose \\(h_i\\)​ to minimize the right‑hand side\n\n\\[ h^*_i = -\\frac{1}{L_i} f_i^\\prime(x)^\\#\\]\n\n\nWe can now define the optimal coordinate steps as\n\n\n\\[ T_i(x) = x - \\frac{1}{L_i}U_if_i^\\prime(x)^\\# \\]"
+    "text": "Optimal Coordinate Step\nWe choose \\(h_i\\)​ to minimize the right‑hand side\n\n\\[ h^*_i = -\\frac{1}{L_i} f_i^\\prime(x)\\]\n\n\nWe can now define the optimal coordinate steps as\n\n\n\\[ T_i(x) = x - \\frac{1}{L_i}U_if_i^\\prime(x) \\]"
   },
   {
     "objectID": "index.html#guaranteed-decrease",
     "href": "index.html#guaranteed-decrease",
     "title": "Randomized Coordinate Descent Methods",
     "section": "Guaranteed Decrease",
-    "text": "Guaranteed Decrease\n\n\\[ f(x) - f(T_i(x)) \\ge \\frac{1}{2L_i} (\\| f_i^\\prime(x) \\|^*_{i})^2 \\]\n\n\nSo the decrease is proportional to the squared size of the partial gradient."
+    "text": "Guaranteed Decrease\n\n\\[ f(x) - f(T_i(x)) \\ge \\frac{1}{2L_i} (\\| f_i^\\prime(x) \\|_{i})^2 \\]\n\n\nSo the decrease is proportional to the squared size of the partial gradient."
   },
   {
     "objectID": "index.html#random-coordinate-selection",
@@ -81,7 +88,14 @@
     "href": "index.html#rcd-algorithm",
     "title": "Randomized Coordinate Descent Methods",
     "section": "RCD Algorithm",
-    "text": "RCD Algorithm\n\n\nInput: starting point \\(x_0\\), parameter \\(\\alpha\\)\n\n\nFor \\(k=0,1,2,\\dots\\) do\n\n\n\nChoose random block \\(\\color{#000000}{i_k}\\) with probability \\(p_\\alpha(i)\\)\n\n\n\n\nUpdate: \\[x_{k+1} = x_k - \\frac{1}{L_{\\color{#000000}{i_k}}} U_{\\color{#000000}{i_k}} (f'_{\\color{#000000}{i_k}}(x_k))^\\#\\]\n\n\n\nEnd"
+    "text": "RCD Algorithm\n\n\nInput: starting point \\(x_0\\), parameter \\(\\alpha\\)\n\n\nFor \\(k=0,1,2,\\dots\\) do\n\n\n\nChoose random block \\(\\color{#000000}{i_k}\\) with probability \\(p_\\alpha(i)\\)\n\n\n\n\nUpdate: \\[x_{k+1} = x_k - \\frac{1}{L_{\\color{#000000}{i_k}}} U_{\\color{#000000}{i_k}} (f'_{\\color{#000000}{i_k}}(x_k))\\]\n\n\n\nEnd"
+  },
+  {
+    "objectID": "index.html#lemma-2",
+    "href": "index.html#lemma-2",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Lemma 2",
+    "text": "Lemma 2\n\nLet \\(f\\) satisfy Coordinate‑wise Smoothness. Then for any \\(\\alpha \\in \\mathbb{R}\\) we have:\n\n\n\\[\\|\\nabla f(x) - \\nabla f(y)\\|_{1-\\alpha}^* \\le S_\\alpha \\|x - y\\|_{1-\\alpha}, \\quad x, y \\in \\mathbb{R}^N\\]\n\n\nTherefore, we have the following quadratic upper bound:\n\n\n\\[f(x) \\le f(y) + \\langle \\nabla f(y), x - y \\rangle + \\frac{1}{2} S_\\alpha \\|x - y\\|_{1-\\alpha}^2, \\quad x, y \\in \\mathbb{R}^N\\]"
   },
   {
     "objectID": "index.html#theorem-1---convergence-rate-of-rcdm",
@@ -123,6 +137,55 @@
     "href": "index.html#step-2-relating-gradient-norm-and-suboptimality",
     "title": "Randomized Coordinate Descent Methods",
     "section": "Step 2 – Relating Gradient Norm and Suboptimality",
-    "text": "Step 2 – Relating Gradient Norm and Suboptimality\n\nSince \\(f\\) is convex and for any point \\(x^* \\in X^*\\), we have\n\n\n\\[ f(x_k) - f^* \\le \\langle \\nabla f(x_k), x_k - x^* \\rangle \\]"
+    "text": "Step 2 – Relating Gradient Norm and Suboptimality\n\nSince \\(f\\) is convex and for any point \\(x^* \\in X^*\\), we have\n\n\n\\[ f(x_k) - f^* \\le \\langle \\nabla f(x_k), x_k - x^* \\rangle \\]\n\n\nUsing the Cauchy-Schwartz inequality seen earlier\n\n\n\\[ \\langle g,x \\rangle \\le \\| g \\|^*_\\alpha \\cdot \\| x \\|_\\alpha \\]\n\n\n\\[ \\langle \\nabla f(x_k), x_k - x^* \\rangle \\le \\| \\nabla f(x_k) \\|^*_{1-\\alpha} \\cdot \\| x_k - x^* \\|_{1-\\alpha} \\]\n\n\nSince \\(f(x_k) \\le f(x_0)\\), \\(x_k\\) lies in the initial level set\n\n\n\\[ \\| x_k - x^* \\|_{1-\\alpha} \\le R_{1-\\alpha}(x_0) = R \\]"
+  },
+  {
+    "objectID": "index.html#step-2-relating-gradient-norm-and-suboptimality-contd.",
+    "href": "index.html#step-2-relating-gradient-norm-and-suboptimality-contd.",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 2 – Relating Gradient Norm and Suboptimality Contd.",
+    "text": "Step 2 – Relating Gradient Norm and Suboptimality Contd.\n\n\\[ f(x_k) - f^* \\]\n\n\n\\[ \\le \\langle \\nabla f(x_k), x_k - x^* \\rangle \\]\n\n\n\\[ \\le \\| \\nabla f(x_k) \\|^*_{1-\\alpha} \\cdot \\| x_k - x^* \\|_{1-\\alpha} \\]\n\n\n\\[ \\le \\| \\nabla f(x_k) \\|^*_{1-\\alpha} \\cdot R \\]\n\n\nSquaring both sides and rearranging\n\n\n\\[ (\\| \\nabla f(x_k) \\|^*_{1-\\alpha})^2 \\ge \\frac{(f(x_k) - f^*)^2}{R^2} \\]"
+  },
+  {
+    "objectID": "index.html#using-step-2-in-step-1",
+    "href": "index.html#using-step-2-in-step-1",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Using Step 2 in Step 1",
+    "text": "Using Step 2 in Step 1\n\nFrom Step 1\n\n\n\\[ f(x_k) - \\mathbb{E}_{i_k} [f(x_{k+1}) \\mid x_k] \\ge \\frac{1}{2S_\\alpha}(\\| \\nabla f(x_k) \\|^*_{1-\\alpha})^2 \\]\n\n\nFrom Step 2\n\n\n\\[ (\\| \\nabla f(x_k) \\|^*_{1-\\alpha})^2 \\ge \\frac{(f(x_k) - f^*)^2}{R^2} \\]\n\n\nUsing the above two steps to get\n\n\n\\[ f(x_k) - \\mathbb{E}_{i_k} [f(x_{k+1}) \\mid x_k] \\ge \\frac{1}{2S_\\alpha R^2}(f(x_k) - f^*)^2 \\]"
+  },
+  {
+    "objectID": "index.html#step-3---find-recurrence-in-expectation",
+    "href": "index.html#step-3---find-recurrence-in-expectation",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 3 - Find Recurrence in Expectation",
+    "text": "Step 3 - Find Recurrence in Expectation\n\nDefine the following\n\n\n\\[ \\phi_k = \\mathbb{E}_{\\xi_{k-1}} [f(x_k)] \\]\n\n\n\\[ \\phi_{k+1} = \\mathbb{E}_{\\xi_{k}} [f(x_{k+1})] \\]\n\n\nApply \\(\\mathbb{E}_{\\xi_{k-1}}\\) to the derived inequality from Step 1 and Step 2\n\n\n\\[ f(x_k) - \\mathbb{E}_{i_k} [f(x_{k+1}) \\mid x_k] \\ge \\frac{1}{2S_\\alpha R^2}(f(x_k) - f^*)^2 \\]\n\n\nto get\n\n\n\\[ \\phi_k - \\phi_{k+1} \\ge \\frac{1}{2S_\\alpha R^2} \\cdot \\mathbb{E}_{\\xi_{k-1}} [(f(x_k) - f^*)^2] \\]\n\n\nUse Jensen’s Inequality\n\n\n\\[ \\phi_k - \\phi_{k+1} \\ge \\frac{1}{2S_\\alpha R^2} \\cdot (\\mathbb{E}_{\\xi_{k-1}} [f(x_k) - f^*])^2 = \\frac{1}{2S_\\alpha R^2} (\\phi_k - f^*)^2 \\]"
+  },
+  {
+    "objectID": "index.html#step-3---find-recurrence-in-expectation-contd.",
+    "href": "index.html#step-3---find-recurrence-in-expectation-contd.",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 3 - Find Recurrence in Expectation Contd.",
+    "text": "Step 3 - Find Recurrence in Expectation Contd.\n\n\\[ \\phi_k - \\phi_{k+1} \\ge \\frac{1}{C} (\\phi_k - f^*)^2, \\; where \\; C = 2S_\\alpha R^2\\]"
+  },
+  {
+    "objectID": "index.html#step-4---solve-the-recurrence",
+    "href": "index.html#step-4---solve-the-recurrence",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 4 - Solve the Recurrence",
+    "text": "Step 4 - Solve the Recurrence\n\nDefine\n\n\n\\[ \\delta_k = \\phi_k - f^* \\ge 0 \\]\n\n\nThe recurrence relation from Step 3 becomes\n\n\n\\[ \\delta_k - \\delta_{k+1} \\ge \\frac{1}{C} \\delta_k^2 \\]\n\n\nNote that\n\n\n\\[ \\delta_k &gt; 0 \\; and \\; \\delta_{k+1} \\le \\delta_k\\]\n\n\nFollow through with some algebra\n\n\n\\[ \\frac{1}{\\delta_{k+1}} - \\frac{1}{\\delta_k} = \\frac{\\delta_k - \\delta_{k+1}}{\\delta_k \\delta_{k+1}} \\ge \\frac{\\delta_k^2}{C \\delta_k \\delta_{k+1}} \\ge \\frac{1}{C} \\]\n\n\n\\[ \\frac{1}{\\delta_{k+1}} \\ge \\frac{1}{\\delta_{k}} + \\frac{1}{C} \\]"
+  },
+  {
+    "objectID": "index.html#step-4---solve-the-recurrence-contd.",
+    "href": "index.html#step-4---solve-the-recurrence-contd.",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 4 - Solve the Recurrence Contd.",
+    "text": "Step 4 - Solve the Recurrence Contd.\n\nUsing telescopic sum trick, we get\n\n\n\\[ \\frac{1}{\\delta_{k+1}} \\ge \\frac{1}{\\delta_{0}} + \\frac{k}{C} \\]\n\n\nWe would like to get a bound on \\(\\delta_0\\). We can use Lemma 2\n\n\n\\[ f(x) \\le f(y) + \\langle \\nabla f(y), x-y \\rangle + \\frac{1}{2} S_\\alpha \\| x-y \\|^2_{1-\\alpha} \\]\n\n\n\\[ f(x_0) \\le f(x^*) + \\langle \\nabla f(x^*), x_0-x^* \\rangle + \\frac{1}{2} S_\\alpha \\| x_0-x^* \\|^2_{1-\\alpha} \\]\n\n\n\\[ f(x_0) \\le f(x^*) + \\frac{1}{2} S_\\alpha \\| x_0-x^* \\|^2_{1-\\alpha} \\]\n\n\n\\[ f(x_0) - f(x^*) \\le + \\frac{1}{2} S_\\alpha R^2 \\]\n\n\n\\[ \\delta_0 \\le + \\frac{1}{2} S_\\alpha R^2 \\]\n\n\n\\[ \\frac{1}{\\delta_0} \\ge \\frac{2}{S_\\alpha R^2} = \\frac{4}{2S_\\alpha R^2} = \\frac{4}{C} \\]"
+  },
+  {
+    "objectID": "index.html#step-4---solve-the-recurrence-contd.-1",
+    "href": "index.html#step-4---solve-the-recurrence-contd.-1",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Step 4 - Solve the Recurrence Contd.",
+    "text": "Step 4 - Solve the Recurrence Contd.\n\n\\[ \\frac{1}{\\delta_0} \\ge \\frac{4}{C} \\]\n\n\n\\[ \\frac{1}{\\delta_{k+1}} \\ge \\frac{1}{\\delta_{0}} + \\frac{k}{C} \\ge \\frac{4}{C} + \\frac{k}{C} = \\frac{k+4}{C}\\]\n\n\n\\[ \\delta_k \\le \\frac{C}{k+4} = \\frac{2S_\\alpha R^2}{k+4}\\]\n\n\n\\[ \\phi_k - f^* \\le \\frac{2}{k+4} \\cdot [\\sum_{i=1}^n L_i^\\alpha] \\cdot R_{1-\\alpha}^2(x_0)\\]"
   }
 ]
