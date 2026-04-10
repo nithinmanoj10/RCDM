@@ -21,13 +21,6 @@
     "text": "The Main Idea – Coordinate Relaxation\nInstead of updating all coordinates at once, update only one block of coordinates per iteration.\n\n\nPartition \\(\\mathbb{R}^N\\) into \\(n\\) blocks\n\n\n\n\\[x = ( x^{(1)}, x^{(2)}, ..., x^{(n)} )\\]\n\n\n\nAt each step, pick a random block \\(i_k\\)​ and move only that block.\n\n\n\nIf each coordinate update is cheap (e.g., sparse data), many cheap steps can outperform a few expensive full‑gradient steps."
   },
   {
-    "objectID": "index.html#sparse-quadratic-problem",
-    "href": "index.html#sparse-quadratic-problem",
-    "title": "Randomized Coordinate Descent Methods",
-    "section": "Sparse Quadratic Problem",
-    "text": "Sparse Quadratic Problem\n\n\\[f(x) = \\sum_{i=1}^{n} f_i(x^{(i)}) + \\frac{1}{2} \\| Ax-b \\|^2 \\]\n\n\n\\(f_i\\) are convex differentiable univariate functions\nEach column \\(a_i\\)​ of \\(A\\) is sparse, each with \\(p_i\\) number of non-zero elements.\n\n\n\\[x_+ = x + \\alpha a_i \\]\n\n\n\nOnly requires \\(O(p_i)\\) steps to compute\n\n\n\nNesterov’s insight can be thousands of times faster per effective pass."
-  },
-  {
     "objectID": "index.html#the-problem-we-are-trying-to-solve",
     "href": "index.html#the-problem-we-are-trying-to-solve",
     "title": "Randomized Coordinate Descent Methods",
@@ -39,7 +32,7 @@
     "href": "index.html#mathematical-notations",
     "title": "Randomized Coordinate Descent Methods",
     "section": "Mathematical Notations",
-    "text": "Mathematical Notations\nWe will make use of these norms later on during our convergence analysis\n\n\\[\\|x\\|_\\alpha = \\left[ \\sum_{i=1}^n L_i^\\alpha \\|x^{(i)}\\|^2 \\right]^{1/2}, \\quad x \\in \\mathbb{R}^N\\]\n\n\n\\[\\|g\\|_\\alpha^* = \\left[ \\sum_{i=1}^n L_i^{-\\alpha} (\\|g^{(i)}\\|^*)^2 \\right]^{1/2}, \\quad g \\in \\mathbb{R}^N\\]\n\n\nWe also define the following sum\n\n\n\\[ S_\\alpha = \\sum_{i=1}^n L_i^\\alpha \\]"
+    "text": "Mathematical Notations\nWe will make use of these norms later on during our convergence analysis\n\n\\[\\|x\\|_\\alpha = \\left[ \\sum_{i=1}^n L_i^\\alpha \\|x^{(i)}\\|^2 \\right]^{1/2}, \\quad x \\in \\mathbb{R}^N\\]\n\n\n\\[\\|g\\|_\\alpha^* = \\left[ \\sum_{i=1}^n L_i^{-\\alpha} (\\|g^{(i)}\\|^*)^2 \\right]^{1/2}, \\quad g \\in \\mathbb{R}^N\\]\n\n\n\\[ \\langle g,x \\rangle \\le \\| g \\|^*_\\alpha \\cdot \\| x \\|_\\alpha \\]\n\n\nWe also define the following sum\n\n\n\\[ S_\\alpha = \\sum_{i=1}^n L_i^\\alpha \\]"
   },
   {
     "objectID": "index.html#mathematical-notations-contd.",
@@ -189,11 +182,74 @@
     "text": "Step 4 - Solve the Recurrence Contd.\n\n\\[ \\frac{1}{\\delta_0} \\ge \\frac{4}{C} \\]\n\n\n\\[ \\frac{1}{\\delta_{k+1}} \\ge \\frac{1}{\\delta_{0}} + \\frac{k}{C} \\ge \\frac{4}{C} + \\frac{k}{C} = \\frac{k+4}{C}\\]\n\n\n\\[ \\delta_k \\le \\frac{C}{k+4} = \\frac{2S_\\alpha R^2}{k+4}\\]\n\n\n\\[ \\phi_k - f^* \\le \\frac{2}{k+4} \\cdot [\\sum_{i=1}^n L_i^\\alpha] \\cdot R_{1-\\alpha}^2(x_0)\\]"
   },
   {
-    "objectID": "index.html#simulation-and-experiments",
-    "href": "index.html#simulation-and-experiments",
+    "objectID": "index.html#experimental-setup",
+    "href": "index.html#experimental-setup",
     "title": "Randomized Coordinate Descent Methods",
-    "section": "Simulation and Experiments",
-    "text": "Simulation and Experiments"
+    "section": "Experimental Setup",
+    "text": "Experimental Setup\nOptimization Problem \\[\n\\min_w \\; \\frac{1}{n} \\|Xw - y\\|^2\n\\]\n\n\nSynthetic dataset\n\\(n = d \\in \\{300, 1000, 2000, 5000, 10000\\}\\)\nSparse matrix (≈ 5% non-zero entries)\n\n\n\n\\(\\textbf{Methods Compared}\\) Gradient Descent (GD) vs Randomized Coordinate Descent (RCDM)\n\n\n\\(\\textbf{Metrics}\\) Loss vs Epochs and Loss vs Time"
+  },
+  {
+    "objectID": "index.html#n-d-300",
+    "href": "index.html#n-d-300",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "\\(n = d = 300\\)",
+    "text": "\\(n = d = 300\\)"
+  },
+  {
+    "objectID": "index.html#n-d-1000",
+    "href": "index.html#n-d-1000",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "\\(n = d = 1000\\)",
+    "text": "\\(n = d = 1000\\)"
+  },
+  {
+    "objectID": "index.html#n-d-2000",
+    "href": "index.html#n-d-2000",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "\\(n = d = 2000\\)",
+    "text": "\\(n = d = 2000\\)"
+  },
+  {
+    "objectID": "index.html#n-d-5000",
+    "href": "index.html#n-d-5000",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "\\(n = d = 5000\\)",
+    "text": "\\(n = d = 5000\\)"
+  },
+  {
+    "objectID": "index.html#n-d-10000",
+    "href": "index.html#n-d-10000",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "\\(n = d = 10000\\)",
+    "text": "\\(n = d = 10000\\)"
+  },
+  {
+    "objectID": "index.html#observations",
+    "href": "index.html#observations",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Observations",
+    "text": "Observations\n\nRCDM appears faster in terms of epochs because it performs multiple coordinate updates per epoch.\nGD is stable but requires full gradient computation\nGap between methods increases with dimension"
+  },
+  {
+    "objectID": "index.html#key-insight-global-vs-local-information",
+    "href": "index.html#key-insight-global-vs-local-information",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Key Insight: Global vs Local Information",
+    "text": "Key Insight: Global vs Local Information\n\nGradient Descent (GD)\n\n\n\nRequires global Lipschitz constant:\n\n\n\n\\[\n  L = \\frac{2}{n} \\lambda_{\\max}(X^T X)\n\\]\n\n\nComputing \\(L\\) involves expensive matrix operations\nCost increases significantly with dimension \\(d\\)\n\n\nRCDM\n\n\n\nUses coordinate-wise constants\n\n\n\n\\[\n  L_i = \\frac{2}{n} \\|X[:, i]\\|^2\n  \\]\n\n\nRequires only one column of \\(X\\)\nComputation cost: \\(\\mathcal{O}(n)\\)"
+  },
+  {
+    "objectID": "index.html#scalability-analysis",
+    "href": "index.html#scalability-analysis",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Scalability Analysis",
+    "text": "Scalability Analysis\nAs dimension \\(d\\) increases:\n\nGradient Descent\n\nExpensive preprocessing (computing \\(L\\))\nPer-iteration cost: \\(\\mathcal{O}(nd)\\)\n\nRCDM\n\nNo expensive preprocessing\nPer-iteration cost: \\(\\mathcal{O}(n)\\)\n\n\n\n\nRCDM scales better for high-dimensional problems"
+  },
+  {
+    "objectID": "index.html#conclusion",
+    "href": "index.html#conclusion",
+    "title": "Randomized Coordinate Descent Methods",
+    "section": "Conclusion",
+    "text": "Conclusion\n\nGD requires global information and full gradient computation\nRCDM uses local information and cheaper updates\nRCDM becomes more efficient as dimension increases\n\n\nCoordinate methods enable scalable optimization in high dimensions"
   },
   {
     "objectID": "index.html#recent-extension",
@@ -210,53 +266,32 @@
     "text": "Problem Setting\n\n\\[ \\min_{x \\in \\mathbb{R}^N} P(x) = f(x) + \\psi(x) \\]\n\n\nProperties of \\(f(x)\\)\n\n\nConvex\nDifferentiable\nSmooth\n\n\nProperties of \\(\\psi(x)\\)\n\n\nConvex\nPossibly non-smooth\nPossibly non-separable"
   },
   {
-    "objectID": "index.html#limitations",
-    "href": "index.html#limitations",
+    "objectID": "index.html#limitations-of-nesterov-2012-rcdm",
+    "href": "index.html#limitations-of-nesterov-2012-rcdm",
     "title": "Randomized Coordinate Descent Methods",
-    "section": "Limitations",
-    "text": "Limitations\n\n\\[x_{k+1} = x_k - \\frac{1}{L_{\\color{#000000}{i_k}}} U_{\\color{#000000}{i_k}} (f'_{\\color{#000000}{i_k}}(x_k))\\]\n\n\nProblems\n\n\nUpdates only one coordinate block\nAssumes coordinates are independent\nFails when \\(\\psi(x)\\) is non-separable"
+    "section": "Limitations of Nesterov (2012) RCDM",
+    "text": "Limitations of Nesterov (2012) RCDM\n\n1. Separability Requirement - Updates: \\(x_{k+1}^{(i)} = \\text{prox}_{\\eta \\psi_i}(x_k^{(i)} - \\eta f'_i(x_k))\\) - Fails when \\(\\psi(x)\\) is non-separable (e.g., L2 norm). - Coordinates cannot be updated independently.\n\n\n2. Non-Vanishing Variance - Uses partial gradient \\(f'_i(x)\\) instead of full \\(\\nabla f(x)\\). - Introduces stochastic noise that does not disappear near the optimum. - Leads to Zig-Zag behavior and prevents faster convergence.\n\n\n3. No Acceleration - Convergence rate: \\(\\mathbf{O(1/k)}\\). - Momentum incompatible with non-separable regularizers. - Inefficient for modern huge-scale problems."
   },
   {
-    "objectID": "index.html#limitations-contd.",
-    "href": "index.html#limitations-contd.",
+    "objectID": "index.html#solution-1-full-vector-proximal-operator",
+    "href": "index.html#solution-1-full-vector-proximal-operator",
     "title": "Randomized Coordinate Descent Methods",
-    "section": "Limitations Contd.",
-    "text": "Limitations Contd.\n\nGradient based methods uses the full gradient\n\n\n\\[\\nabla f(x)\\]\n\n\nWhereas, RCDM uses only partial gradients\n\n\n\\[f'_i(x) = U_i^T \\nabla f(x) \\in \\mathbb{R}^{n_i}, \\quad x \\in \\mathbb{R}^N\\]\n\n\nProblems that arise:\n\n\nSince the partial gradient \\(\\neq\\) full gradient, it introduces some noise (variance).\nConsequently, the updates become unstable.\nEffectively, showcases Zig-Zag behaviour and slower convergence."
+    "section": "Solution 1: Full-Vector Proximal Operator",
+    "text": "Solution 1: Full-Vector Proximal Operator\n\nUpdate Rule (New Capability)\n\n\n\\[x_{k+1} = \\text{prox}_{\\eta \\psi}(x_k - \\eta g_k)\\]\n\n\nNesterov (2012) vs. ASVRCD (2020)\n\n\nNesterov: Prox applied coordinate-wise. Requires separability.\nASVRCD: Prox applied to the full vector \\(x\\). Handles non-separable constraints.\n\n\nWhy is this feasible now? - Made efficient by the Variance Reduction scheme (next slide)."
   },
   {
-    "objectID": "index.html#limitations-contd.-1",
-    "href": "index.html#limitations-contd.-1",
+    "objectID": "index.html#solution-2-variance-reduction-control-variates",
+    "href": "index.html#solution-2-variance-reduction-control-variates",
     "title": "Randomized Coordinate Descent Methods",
-    "section": "Limitations Contd.",
-    "text": "Limitations Contd.\n\nThe current convergence rate is\n\n\n\\[O(1/k)\\]\n\n\nProblems that arise:\n\n\nNo acceleration mechanism\nUses only the current iterate\nConsequently, this requires many more iterations and is inefficient for large-scale problems"
-  },
-  {
-    "objectID": "index.html#solution-1---proximal-operator",
-    "href": "index.html#solution-1---proximal-operator",
-    "title": "Randomized Coordinate Descent Methods",
-    "section": "Solution 1 - Proximal Operator",
-    "text": "Solution 1 - Proximal Operator\nUpdate Rule\n\n\\[x_{k+1} = \\text{prox}_{\\eta \\psi}(x_k - \\eta g_k)\\]\n\n \nWhat it does\n\nEnforces structure of \\(\\psi(x)\\)\nMaintains feasibility\nHandles non-separable regularization"
-  },
-  {
-    "objectID": "index.html#solution-2-variance-reduction",
-    "href": "index.html#solution-2-variance-reduction",
-    "title": "Randomized Coordinate Descent Methods",
-    "section": "Solution 2: Variance Reduction",
-    "text": "Solution 2: Variance Reduction\nThe Idea : Use past gradient information to correct the current estimate.\n\nGradient Estimator \\[g_k = d \\cdot \\nabla_i f(x_k) e_i - d \\cdot h_i^k e_i + h^k\\]\n\n\nWhere:\n\n\n\\(\\nabla_i f(x_k)\\): current partial gradient\n\\(h_i^k\\): stored past gradient for coordinate \\(i\\)\n\\(h^k\\): average of stored gradients\n\n\nIntuition : New estimate = current info - old info + memory and Noise cancels out over time.\n\n\nKey Property \\[\\text{Var}(g_k) \\rightarrow 0\\]"
+    "section": "Solution 2: Variance Reduction (Control Variates)",
+    "text": "Solution 2: Variance Reduction (Control Variates)\n\nThe Problem - Standard RCD uses only the current partial gradient \\(\\nabla_i f(x_k)\\). - This estimate is noisy and the noise does not disappear as we approach the solution.\n\n\nThe Fix: Use a “Memory” Vector - Maintain a stored gradient \\(h^k \\in \\mathbb{R}^N\\). - Correct the current estimate by subtracting old information and adding the global average:\n\n\n\\[(g_k)_i = \\underbrace{\\nabla_i f(x_k)}_{\\text{Current}} - \\underbrace{h_i^k}_{\\text{Old memory}} + \\underbrace{\\frac{1}{N}\\sum_{j=1}^N h_j^k}_{\\text{Global average}}\\]\n\n\nWhy It Works - The correction terms cancel out the randomness over time. - As \\(x_k \\to x^*\\), the variance of \\(g_k\\) goes to zero.\n\n\nConsequence - The algorithm behaves more and more like full gradient descent near the optimum. - This stability allows us to safely add Nesterov acceleration (Solution 3)."
   },
   {
     "objectID": "index.html#solution-3-acceleration",
     "href": "index.html#solution-3-acceleration",
     "title": "Randomized Coordinate Descent Methods",
     "section": "Solution 3: Acceleration",
-    "text": "Solution 3: Acceleration\n\nThe Idea\n\n\nUse momentum\nCombine past iterates\n\n\nEffect\n\n\nFaster convergence\nMore efficient updates"
-  },
-  {
-    "objectID": "index.html#final-summary",
-    "href": "index.html#final-summary",
-    "title": "Randomized Coordinate Descent Methods",
-    "section": "Final Summary",
-    "text": "Final Summary\n\nASVRCD Combines\n\n\nProximal updates\nVariance reduction\nAcceleration\n\n\nTakeaway"
+    "text": "Solution 3: Acceleration\n\nThe Idea\n\n\nUse momentum\nCombine past iterates\n\n\nEffect\n\n\nFaster convergence: \\(\\mathbf{O(1/k^2)}\\)\nSmoother trajectory\nOptimal for convex problems"
   },
   {
     "objectID": "index.html#summary",

@@ -189,27 +189,6 @@ Nithin Manoj
 <p>If each coordinate update is cheap (e.g., sparse data), many cheap steps can outperform a few expensive full‑gradient steps.</p>
 </div>
 </section>
-<section id="sparse-quadratic-problem" class="slide level2 smaller">
-<h2>Sparse Quadratic Problem</h2>
-<div class="fragment" style="text-align: center; font-size: 1.3em;">
-<p><span class="math display">\[f(x) = \sum_{i=1}^{n} f_i(x^{(i)}) + \frac{1}{2} \| Ax-b \|^2 \]</span></p>
-</div>
-<ul>
-<li class="fragment"><span class="math inline">\(f_i\)</span> are convex differentiable univariate functions</li>
-<li class="fragment">Each column <span class="math inline">\(a_i\)</span>​ of <span class="math inline">\(A\)</span> is sparse, each with <span class="math inline">\(p_i\)</span> number of non-zero elements.</li>
-</ul>
-<div class="fragment" style="text-align: center; font-size: 1.0em;">
-<p><span class="math display">\[x_+ = x + \alpha a_i \]</span></p>
-</div>
-<div class="fragment">
-<ul>
-<li>Only requires <span class="math inline">\(O(p_i)\)</span> steps to compute</li>
-</ul>
-</div>
-<div class="fragment intuition">
-<p>Nesterov’s insight can be thousands of times faster per effective pass.</p>
-</div>
-</section>
 <section id="the-problem-we-are-trying-to-solve" class="slide level2 smaller">
 <h2>The Problem we are Trying to Solve</h2>
 <div class="fragment" style="text-align: center; font-size: 2.5em;">
@@ -229,6 +208,9 @@ Nithin Manoj
 </div>
 <div class="fragment" style="text-align: center; font-size: 1.0em;">
 <p><span class="math display">\[\|g\|_\alpha^* = \left[ \sum_{i=1}^n L_i^{-\alpha} (\|g^{(i)}\|^*)^2 \right]^{1/2}, \quad g \in \mathbb{R}^N\]</span></p>
+</div>
+<div class="fragment" style="text-align: center; font-size: 1.0em;">
+<p><span class="math display">\[ \langle g,x \rangle \le \| g \|^*_\alpha \cdot \| x \|_\alpha \]</span></p>
 </div>
 <div class="fragment">
 <p>We also define the following sum</p>
@@ -619,8 +601,121 @@ Nithin Manoj
 <p><span class="math display">\[ \phi_k - f^* \le \frac{2}{k+4} \cdot [\sum_{i=1}^n L_i^\alpha] \cdot R_{1-\alpha}^2(x_0)\]</span></p>
 </div>
 </section>
-<section id="simulation-and-experiments" class="slide level2">
-<h2>Simulation and Experiments</h2>
+<section id="experimental-setup" class="slide level2 smaller">
+<h2>Experimental Setup</h2>
+<p><strong>Optimization Problem</strong> <span class="math display">\[
+\min_w \; \frac{1}{n} \|Xw - y\|^2
+\]</span></p>
+<div class="fragment">
+<ul>
+<li>Synthetic dataset</li>
+<li><span class="math inline">\(n = d \in \{300, 1000, 2000, 5000, 10000\}\)</span></li>
+<li>Sparse matrix (≈ 5% non-zero entries)</li>
+</ul>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(\textbf{Methods Compared}\)</span> Gradient Descent (GD) vs Randomized Coordinate Descent (RCDM)</p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(\textbf{Metrics}\)</span> Loss vs Epochs and Loss vs Time</p>
+</div>
+</section>
+<section id="n-d-300" class="slide level2">
+<h2><span class="math inline">\(n = d = 300\)</span></h2>
+
+<img data-src="plots/plt_300_300.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="n-d-1000" class="slide level2">
+<h2><span class="math inline">\(n = d = 1000\)</span></h2>
+
+<img data-src="plots/plt_1000_1000.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="n-d-2000" class="slide level2">
+<h2><span class="math inline">\(n = d = 2000\)</span></h2>
+
+<img data-src="plots/plt_2000_2000.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="n-d-5000" class="slide level2">
+<h2><span class="math inline">\(n = d = 5000\)</span></h2>
+
+<img data-src="plots/plt_5000_5000.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="n-d-10000" class="slide level2">
+<h2><span class="math inline">\(n = d = 10000\)</span></h2>
+
+<img data-src="plots/plt_10000_10000.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="observations" class="slide level2 smaller">
+<h2>Observations</h2>
+<ul>
+<li class="fragment">RCDM appears faster in terms of epochs because it performs multiple coordinate updates per epoch.</li>
+<li class="fragment">GD is stable but requires full gradient computation</li>
+<li class="fragment">Gap between methods increases with dimension</li>
+</ul>
+</section>
+<section id="key-insight-global-vs-local-information" class="slide level2 smaller">
+<h2>Key Insight: Global vs Local Information</h2>
+<div class="fragment">
+<p>Gradient Descent (GD)</p>
+</div>
+<div class="fragment">
+<ul>
+<li>Requires global Lipschitz constant:</li>
+</ul>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[
+  L = \frac{2}{n} \lambda_{\max}(X^T X)
+\]</span></p>
+</div>
+<ul>
+<li class="fragment">Computing <span class="math inline">\(L\)</span> involves expensive matrix operations</li>
+<li class="fragment">Cost increases significantly with dimension <span class="math inline">\(d\)</span></li>
+</ul>
+<div class="fragment">
+<p>RCDM</p>
+</div>
+<div class="fragment">
+<ul>
+<li>Uses coordinate-wise constants</li>
+</ul>
+</div>
+<div class="fragment" style="text-align: center; font-size: 0.7em;">
+<p><span class="math display">\[
+  L_i = \frac{2}{n} \|X[:, i]\|^2
+  \]</span></p>
+</div>
+<ul>
+<li class="fragment">Requires only one column of <span class="math inline">\(X\)</span></li>
+<li class="fragment">Computation cost: <span class="math inline">\(\mathcal{O}(n)\)</span></li>
+</ul>
+</section>
+<section id="scalability-analysis" class="slide level2 smaller">
+<h2>Scalability Analysis</h2>
+<p>As dimension <span class="math inline">\(d\)</span> increases:</p>
+<ul>
+<li class="fragment"><strong>Gradient Descent</strong>
+<ul>
+<li class="fragment">Expensive preprocessing (computing <span class="math inline">\(L\)</span>)</li>
+<li class="fragment">Per-iteration cost: <span class="math inline">\(\mathcal{O}(nd)\)</span></li>
+</ul></li>
+<li class="fragment"><strong>RCDM</strong>
+<ul>
+<li class="fragment">No expensive preprocessing</li>
+<li class="fragment">Per-iteration cost: <span class="math inline">\(\mathcal{O}(n)\)</span></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<div class="fragment intuition">
+<p>RCDM scales better for high-dimensional problems</p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="slide level2 smaller">
+<h2>Conclusion</h2>
+<ul>
+<li class="fragment">GD requires global information and full gradient computation</li>
+<li class="fragment">RCDM uses local information and cheaper updates</li>
+<li class="fragment">RCDM becomes more efficient as dimension increases</li>
+</ul>
+<div class="fragment intuition">
+<p>Coordinate methods enable scalable optimization in high dimensions</p>
+</div>
 </section>
 <section id="recent-extension" class="slide level2">
 <h2>Recent Extension</h2>
@@ -653,93 +748,53 @@ Nithin Manoj
 <li class="fragment">Possibly non-separable</li>
 </ul>
 </section>
-<section id="limitations" class="slide level2 smaller">
-<h2>Limitations</h2>
-<div class="fragment" style="text-align: center; font-size: 1.0em;">
-<p><span class="math display">\[x_{k+1} = x_k - \frac{1}{L_{\color{#000000}{i_k}}} U_{\color{#000000}{i_k}} (f'_{\color{#000000}{i_k}}(x_k))\]</span></p>
+<section id="limitations-of-nesterov-2012-rcdm" class="slide level2 smaller">
+<h2>Limitations of Nesterov (2012) RCDM</h2>
+<div class="fragment">
+<p><strong>1. Separability Requirement</strong> - Updates: <span class="math inline">\(x_{k+1}^{(i)} = \text{prox}_{\eta \psi_i}(x_k^{(i)} - \eta f'_i(x_k))\)</span> - Fails when <span class="math inline">\(\psi(x)\)</span> is <strong>non-separable</strong> (e.g., L2 norm). - Coordinates cannot be updated independently.</p>
 </div>
 <div class="fragment">
-<p>Problems</p>
+<p><strong>2. Non-Vanishing Variance</strong> - Uses <strong>partial gradient</strong> <span class="math inline">\(f'_i(x)\)</span> instead of full <span class="math inline">\(\nabla f(x)\)</span>. - Introduces stochastic noise that <strong>does not disappear</strong> near the optimum. - Leads to Zig-Zag behavior and prevents faster convergence.</p>
 </div>
-<ul>
-<li class="fragment">Updates only one coordinate block</li>
-<li class="fragment">Assumes coordinates are independent</li>
-<li class="fragment">Fails when <span class="math inline">\(\psi(x)\)</span> is non-separable</li>
-</ul>
+<div class="fragment">
+<p><strong>3. No Acceleration</strong> - Convergence rate: <span class="math inline">\(\mathbf{O(1/k)}\)</span>. - Momentum incompatible with non-separable regularizers. - Inefficient for modern huge-scale problems.</p>
+</div>
 </section>
-<section id="limitations-contd." class="slide level2 smaller">
-<h2>Limitations Contd.</h2>
+<section id="solution-1-full-vector-proximal-operator" class="slide level2 smaller">
+<h2>Solution 1: Full-Vector Proximal Operator</h2>
 <div class="fragment">
-<p>Gradient based methods uses the full gradient</p>
+<p><strong>Update Rule (New Capability)</strong></p>
 </div>
-<div class="fragment" style="text-align: center; font-size: 1.0em;">
-<p><span class="math display">\[\nabla f(x)\]</span></p>
-</div>
-<div class="fragment">
-<p>Whereas, RCDM uses only partial gradients</p>
-</div>
-<div class="fragment" style="text-align: center; font-size: 1.0em;">
-<p><span class="math display">\[f'_i(x) = U_i^T \nabla f(x) \in \mathbb{R}^{n_i}, \quad x \in \mathbb{R}^N\]</span></p>
-</div>
-<div class="fragment">
-<p>Problems that arise:</p>
-</div>
-<ul>
-<li class="fragment">Since the partial gradient <span class="math inline">\(\neq\)</span> full gradient, it introduces some noise (variance).</li>
-<li class="fragment">Consequently, the updates become unstable.</li>
-<li class="fragment">Effectively, showcases Zig-Zag behaviour and slower convergence.</li>
-</ul>
-</section>
-<section id="limitations-contd.-1" class="slide level2 smaller">
-<h2>Limitations Contd.</h2>
-<div class="fragment">
-<p>The current convergence rate is</p>
-</div>
-<div class="fragment" style="text-align: center; font-size: 1.0em;">
-<p><span class="math display">\[O(1/k)\]</span></p>
-</div>
-<div class="fragment">
-<p>Problems that arise:</p>
-</div>
-<ul>
-<li class="fragment">No acceleration mechanism</li>
-<li class="fragment">Uses only the current iterate</li>
-<li class="fragment">Consequently, this requires many more iterations and is inefficient for large-scale problems</li>
-</ul>
-</section>
-<section id="solution-1---proximal-operator" class="slide level2 smaller">
-<h2>Solution 1 - Proximal Operator</h2>
-<p><strong>Update Rule</strong></p>
-<div style="font-size: 1.5em; text-align: center; margin: 1em 0;">
+<div class="fragment" style="text-align: center; font-size: 1.2em;">
 <p><span class="math display">\[x_{k+1} = \text{prox}_{\eta \psi}(x_k - \eta g_k)\]</span></p>
 </div>
-<p>&nbsp;</p>
-<p><strong>What it does</strong></p>
+<div class="fragment">
+<p><strong>Nesterov (2012) vs.&nbsp;ASVRCD (2020)</strong></p>
+</div>
 <ul>
-<li class="fragment">Enforces structure of <span class="math inline">\(\psi(x)\)</span></li>
-<li class="fragment">Maintains feasibility</li>
-<li class="fragment">Handles non-separable regularization</li>
+<li class="fragment"><strong>Nesterov:</strong> Prox applied <strong>coordinate-wise</strong>. <em>Requires separability.</em></li>
+<li class="fragment"><strong>ASVRCD:</strong> Prox applied to the <strong>full vector</strong> <span class="math inline">\(x\)</span>. <em>Handles non-separable constraints.</em></li>
 </ul>
+<div class="fragment">
+<p><strong>Why is this feasible now?</strong> - Made efficient by the <strong>Variance Reduction</strong> scheme (next slide).</p>
+</div>
 </section>
-<section id="solution-2-variance-reduction" class="slide level2 smaller">
-<h2>Solution 2: Variance Reduction</h2>
-<p><strong>The Idea</strong> : Use past gradient information to correct the current estimate.</p>
+<section id="solution-2-variance-reduction-control-variates" class="slide level2 smaller">
+<h2>Solution 2: Variance Reduction (Control Variates)</h2>
 <div class="fragment">
-<p><strong>Gradient Estimator</strong> <span class="math display">\[g_k = d \cdot \nabla_i f(x_k) e_i - d \cdot h_i^k e_i + h^k\]</span></p>
+<p><strong>The Problem</strong> - Standard RCD uses only the current partial gradient <span class="math inline">\(\nabla_i f(x_k)\)</span>. - This estimate is <strong>noisy</strong> and the noise does not disappear as we approach the solution.</p>
 </div>
 <div class="fragment">
-<p><strong>Where:</strong></p>
+<p><strong>The Fix: Use a “Memory” Vector</strong> - Maintain a stored gradient <span class="math inline">\(h^k \in \mathbb{R}^N\)</span>. - Correct the current estimate by subtracting old information and adding the global average:</p>
 </div>
-<ul>
-<li class="fragment"><span class="math inline">\(\nabla_i f(x_k)\)</span>: current partial gradient</li>
-<li class="fragment"><span class="math inline">\(h_i^k\)</span>: stored past gradient for coordinate <span class="math inline">\(i\)</span></li>
-<li class="fragment"><span class="math inline">\(h^k\)</span>: average of stored gradients</li>
-</ul>
-<div class="fragment">
-<p><strong>Intuition</strong> : New estimate = current info - old info + memory and Noise cancels out over time.</p>
+<div class="fragment" style="text-align: center; font-size: 1.1em;">
+<p><span class="math display">\[(g_k)_i = \underbrace{\nabla_i f(x_k)}_{\text{Current}} - \underbrace{h_i^k}_{\text{Old memory}} + \underbrace{\frac{1}{N}\sum_{j=1}^N h_j^k}_{\text{Global average}}\]</span></p>
 </div>
 <div class="fragment">
-<p><strong>Key Property</strong> <span class="math display">\[\text{Var}(g_k) \rightarrow 0\]</span></p>
+<p><strong>Why It Works</strong> - The correction terms <strong>cancel out the randomness</strong> over time. - As <span class="math inline">\(x_k \to x^*\)</span>, the variance of <span class="math inline">\(g_k\)</span> goes to <strong>zero</strong>.</p>
+</div>
+<div class="fragment">
+<p><strong>Consequence</strong> - The algorithm behaves more and more like <strong>full gradient descent</strong> near the optimum. - This stability allows us to safely add <strong>Nesterov acceleration</strong> (Solution 3).</p>
 </div>
 </section>
 <section id="solution-3-acceleration" class="slide level2 smaller">
@@ -755,23 +810,10 @@ Nithin Manoj
 <p><strong>Effect</strong></p>
 </div>
 <ul>
-<li class="fragment">Faster convergence</li>
-<li class="fragment">More efficient updates</li>
+<li class="fragment">Faster convergence: <span class="math inline">\(\mathbf{O(1/k^2)}\)</span></li>
+<li class="fragment">Smoother trajectory</li>
+<li class="fragment">Optimal for convex problems</li>
 </ul>
-</section>
-<section id="final-summary" class="slide level2 smaller">
-<h2>Final Summary</h2>
-<div class="fragment">
-<p><strong>ASVRCD Combines</strong></p>
-</div>
-<ul>
-<li class="fragment">Proximal updates</li>
-<li class="fragment">Variance reduction</li>
-<li class="fragment">Acceleration</li>
-</ul>
-<div class="fragment">
-<p><strong>Takeaway</strong></p>
-</div>
 </section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
